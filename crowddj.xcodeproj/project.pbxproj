@@ -14,6 +14,7 @@
 		0B3626BF1ACF5B1E00C57C5B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B3626BE1ACF5B1E00C57C5B /* Images.xcassets */; };
 		0B3626C21ACF5B1E00C57C5B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B3626C01ACF5B1E00C57C5B /* LaunchScreen.xib */; };
 		0B3626CE1ACF5B1E00C57C5B /* crowddjTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3626CD1ACF5B1E00C57C5B /* crowddjTests.m */; };
+		0B3626D81ACF5F6F00C57C5B /* Spotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B3626D71ACF5F6F00C57C5B /* Spotify.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		0B3626C71ACF5B1E00C57C5B /* crowddjTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = crowddjTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B3626CC1ACF5B1E00C57C5B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B3626CD1ACF5B1E00C57C5B /* crowddjTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = crowddjTests.m; sourceTree = "<group>"; };
+		0B3626D71ACF5F6F00C57C5B /* Spotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Spotify.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B3626D81ACF5F6F00C57C5B /* Spotify.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +66,7 @@
 		0B3626A51ACF5B1E00C57C5B = {
 			isa = PBXGroup;
 			children = (
+				0B3626D71ACF5F6F00C57C5B /* Spotify.framework */,
 				0B3626B01ACF5B1E00C57C5B /* crowddj */,
 				0B3626CA1ACF5B1E00C57C5B /* crowddjTests */,
 				0B3626AF1ACF5B1E00C57C5B /* Products */,
@@ -345,6 +349,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = crowddj/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -355,6 +363,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = crowddj/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
