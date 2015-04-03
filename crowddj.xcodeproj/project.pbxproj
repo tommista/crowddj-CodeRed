@@ -15,6 +15,7 @@
 		0B3626C21ACF5B1E00C57C5B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B3626C01ACF5B1E00C57C5B /* LaunchScreen.xib */; };
 		0B3626CE1ACF5B1E00C57C5B /* crowddjTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3626CD1ACF5B1E00C57C5B /* crowddjTests.m */; };
 		0B3626D81ACF5F6F00C57C5B /* Spotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B3626D71ACF5F6F00C57C5B /* Spotify.framework */; };
+		0B3626DA1ACF5FA200C57C5B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B3626D91ACF5FA200C57C5B /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,7 @@
 		0B3626CC1ACF5B1E00C57C5B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B3626CD1ACF5B1E00C57C5B /* crowddjTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = crowddjTests.m; sourceTree = "<group>"; };
 		0B3626D71ACF5F6F00C57C5B /* Spotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Spotify.framework; sourceTree = "<group>"; };
+		0B3626D91ACF5FA200C57C5B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B3626DA1ACF5FA200C57C5B /* AVFoundation.framework in Frameworks */,
 				0B3626D81ACF5F6F00C57C5B /* Spotify.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -66,6 +69,7 @@
 		0B3626A51ACF5B1E00C57C5B = {
 			isa = PBXGroup;
 			children = (
+				0B3626D91ACF5FA200C57C5B /* AVFoundation.framework */,
 				0B3626D71ACF5F6F00C57C5B /* Spotify.framework */,
 				0B3626B01ACF5B1E00C57C5B /* crowddj */,
 				0B3626CA1ACF5B1E00C57C5B /* crowddjTests */,
