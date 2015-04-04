@@ -16,6 +16,7 @@
 		0B3626CE1ACF5B1E00C57C5B /* crowddjTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3626CD1ACF5B1E00C57C5B /* crowddjTests.m */; };
 		0B3626DA1ACF5FA200C57C5B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B3626D91ACF5FA200C57C5B /* AVFoundation.framework */; };
 		0B3626DC1ACF620B00C57C5B /* Spotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B3626DB1ACF620B00C57C5B /* Spotify.framework */; };
+		0B3626DF1ACF636900C57C5B /* SpotifyPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3626DE1ACF636900C57C5B /* SpotifyPlayer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,8 @@
 		0B3626CD1ACF5B1E00C57C5B /* crowddjTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = crowddjTests.m; sourceTree = "<group>"; };
 		0B3626D91ACF5FA200C57C5B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		0B3626DB1ACF620B00C57C5B /* Spotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Spotify.framework; sourceTree = "<group>"; };
+		0B3626DD1ACF636900C57C5B /* SpotifyPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpotifyPlayer.h; sourceTree = "<group>"; };
+		0B3626DE1ACF636900C57C5B /* SpotifyPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpotifyPlayer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +100,8 @@
 				0B3626BE1ACF5B1E00C57C5B /* Images.xcassets */,
 				0B3626C01ACF5B1E00C57C5B /* LaunchScreen.xib */,
 				0B3626B11ACF5B1E00C57C5B /* Supporting Files */,
+				0B3626DD1ACF636900C57C5B /* SpotifyPlayer.h */,
+				0B3626DE1ACF636900C57C5B /* SpotifyPlayer.m */,
 			);
 			path = crowddj;
 			sourceTree = "<group>";
@@ -228,6 +233,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B3626BA1ACF5B1E00C57C5B /* ViewController.m in Sources */,
+				0B3626DF1ACF636900C57C5B /* SpotifyPlayer.m in Sources */,
 				0B3626B71ACF5B1E00C57C5B /* AppDelegate.m in Sources */,
 				0B3626B41ACF5B1E00C57C5B /* main.m in Sources */,
 			);
