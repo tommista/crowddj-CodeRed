@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <Spotify/Spotify.h>
 
-@interface SpotifyPlayer : NSObject
+@interface SpotifyPlayer : NSObject <SPTAudioStreamingPlaybackDelegate>
 
 + (SpotifyPlayer *) sharedSpotifyPlayer;
 

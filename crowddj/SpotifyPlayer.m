@@ -28,6 +28,7 @@ static NSString * const kTokenSwapServiceURL = @"http://localhost:1234/swap";
 - (void) initialize{
     if (_player == nil) {
         _player = [[SPTAudioStreamingController alloc] initWithClientId:kClientId];
+        _player.playbackDelegate = self;
     }
 }
 
@@ -110,5 +111,20 @@ static NSString * const kTokenSwapServiceURL = @"http://localhost:1234/swap";
 - (NSDictionary *) currentTrackMetadata{
     return _player.currentTrackMetadata;
 }
+
+#pragma mark - SPTAudioStreamingPlaybackDelegate
+
+- (void) audioStreaming:(SPTAudioStreamingController *)audioStreaming didStartPlayingTrack:(NSURL *)trackUri{
+    NSLog(@"Now playing: %@", trackUri.absoluteString);
+    
+    [SPTRequest requestItemAtURI:trackUri
+                     withSession:nil
+                        callback:^(NSError *error, SPTTrack *track) {
+                            NSMutableDictionary *tempDictionary = [[NSMutableDictionary alloc] init];
+                            [tempDictionary setObject:track forKey:@"trackInfo"];
+                           [[NSNotificationCenter defaultCenter] postNotificationName: @"NewTrackPlaying" object:nil userInfo:tempDictionary];
+                        }];
+}
+
 
 @end

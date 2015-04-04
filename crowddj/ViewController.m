@@ -152,19 +152,18 @@
 
 - (void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNewSongNotification:) name:@"NewTrackPlaying" object:nil];
+}
+
+- (void) viewWillDisappear:(BOOL)animated{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [super viewWillDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
-/*- (IBAction) playButtonPressed:(id)sender{
-    [_spotifyPlayer play];
-}
-
--(IBAction) pauseButtonPressed:(id)sender{
-    [_spotifyPlayer pause];
-}*/
 
 - (IBAction) playPausebuttonPressed:(id)sender{
     if(_spotifyPlayer.isPlaying){
@@ -174,16 +173,20 @@
     }
 }
 
-/*- (IBAction) refreshButtonPressed:(id)sender{
-    [[TwitterManager sharedTwitterManager] fetchTweetsWithHashtag:@"#crowddj"];
-}*/
-
 - (IBAction) goButtonPressed:(id)sender{
     [[TwitterManager sharedTwitterManager] fetchTweetsWithHashtag:@"#crowddj"];
 }
 
 - (IBAction) nextTrackButtonPressed:(id)sender{
     [_spotifyPlayer skipTrack];
+}
+
+- (void) receiveNewSongNotification:(NSNotification *) notification
+{
+    NSDictionary *dictionary = notification.userInfo;
+    SPTTrack *track = [dictionary objectForKey:@"trackInfo"];
+    bottomSongLabel.text = track.name;
+    bottomArtistLabel.text = ((SPTArtist*)[track.artists objectAtIndex:0]).name;
 }
 
 #pragma mark - UITableViewDataSource methods
