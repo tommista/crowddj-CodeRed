@@ -101,4 +101,8 @@ static NSString * const kTokenSwapServiceURL = @"http://localhost:1234/swap";
     
 }
 
+- (NSDictionary *) currentTrackMetadata{
+    return _player.currentTrackMetadata;
+}
+
 @end

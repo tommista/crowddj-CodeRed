@@ -20,6 +20,7 @@
 -(void) pause;
 -(void) play;
 -(bool) isPlaying;
+- (NSDictionary *) currentTrackMetadata;
 
 @property (nonatomic, readwrite) SPTAudioStreamingController *player;
 

@@ -22,6 +22,9 @@
     
     UITextField *textField;
     UIButton *hashtagButton;
+    
+    UILabel *bottomSongLabel;
+    UILabel *bottomArtistLabel;
 }
 @end
 
@@ -81,6 +84,22 @@
     bottomView.backgroundColor = [ColorsUtil textFieldBackgroundColor];
     [centerView addSubview:bottomView];
     
+    bottomSongLabel = [[UILabel alloc] init];
+    bottomSongLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    bottomSongLabel.backgroundColor = [UIColor clearColor];
+    bottomSongLabel.textColor = [ColorsUtil titleTextColor];
+    bottomSongLabel.text = @"Song Label";
+    bottomSongLabel.font = [UIFont systemFontOfSize:18];
+    [bottomView addSubview:bottomSongLabel];
+    
+    bottomArtistLabel = [[UILabel alloc] init];
+    bottomArtistLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    bottomArtistLabel.backgroundColor = [UIColor clearColor];
+    bottomArtistLabel.textColor = [ColorsUtil titleTextColor];
+    bottomArtistLabel.text = @"Artist Label";
+    bottomArtistLabel.font = [UIFont systemFontOfSize:14];
+    [bottomView addSubview:bottomArtistLabel];
+    
     /*playButton = [[UIButton alloc] init];
     [playButton setTitle:@"Play" forState:UIControlStateNormal];
     [playButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -108,7 +127,7 @@
     [refreshButton addTarget:self action:@selector(refreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:refreshButton];*/
     
-    NSDictionary *bindings = NSDictionaryOfVariableBindings(bannerView, centerView, textFieldView, tableView, bottomView, textField, hashtagButton);
+    NSDictionary *bindings = NSDictionaryOfVariableBindings(bannerView, centerView, textFieldView, tableView, bottomView, textField, hashtagButton, bottomSongLabel, bottomArtistLabel);
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[bannerView]-0-|" options:0 metrics:nil views:bindings]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[centerView]-10-|" options:0 metrics:nil views:bindings]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[bannerView(==10)]-0-[centerView(>=200)]-10-|" options:0 metrics:nil views:bindings]];
@@ -122,7 +141,9 @@
     [textFieldView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[textField]-10-|" options:0 metrics:nil views:bindings]];
     [textFieldView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[hashtagButton]-10-|" options:0 metrics:nil views:bindings]];
     
-    
+    [bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[bottomSongLabel]-10-|" options:0 metrics:nil views:bindings]];
+    [bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[bottomArtistLabel]-10-|" options:0 metrics:nil views:bindings]];
+    [bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-5-[bottomSongLabel(==25)]-5-[bottomArtistLabel(==20)]-5-|" options:0 metrics:nil views:bindings]];
     
     //[self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[playButton]-10-|" options:0 metrics:nil views:bindings]];
     //[self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[pauseButton]-10-|" options:0 metrics:nil views:bindings]];
@@ -166,13 +187,40 @@
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [[UITableViewCell alloc] init];
     cell.backgroundColor = [UIColor clearColor];
+    
+    /*UIView *cellView = [[UIView alloc] init];
+    cellView.frame = CGRectMake(0, 0, cell.bounds.size.width, cell.bounds.size.height);
+    cellView.backgroundColor = [UIColor clearColor];
+    [cell addSubview:cellView];
+    
+    UITextView *titleTextView = [[UITextView alloc] init];
+    titleTextView.translatesAutoresizingMaskIntoConstraints = NO;
+    titleTextView.backgroundColor = [UIColor clearColor];
+    titleTextView.text = @"Generic Song Name";
+    titleTextView.textColor = [ColorsUtil titleTextColor];
+    titleTextView.font = [UIFont systemFontOfSize:18];
+    [cellView addSubview:titleTextView];
+    
+    UITextView *artistTextView = [[UITextView alloc] init];
+    artistTextView.translatesAutoresizingMaskIntoConstraints = NO;
+    artistTextView.backgroundColor = [UIColor clearColor];
+    artistTextView.text = @"Generic Artist Name";
+    artistTextView.textColor = [ColorsUtil titleTextColor];
+    artistTextView.font = [UIFont systemFontOfSize:14];
+    [cellView addSubview:artistTextView];
+    
+    NSDictionary *bindings = NSDictionaryOfVariableBindings(titleTextView, artistTextView);
+    [cellView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[titleTextView]-10-|" options:0 metrics:nil views:bindings]];
+    [cellView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-15-[artistTextView]-10-|" options:0 metrics:nil views:bindings]];
+    [cellView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[titleTextView(>=35)]-10-[artistTextView(==25)]-0-|" options:0 metrics:nil views:bindings]];*/
+    
     return cell;
 }
 
 #pragma mark - UITableViewDelegate methods
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 50.0;
+    return 100.0;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{

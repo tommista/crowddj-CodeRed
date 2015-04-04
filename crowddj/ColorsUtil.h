@@ -18,6 +18,7 @@
 + (UIColor *) centerBackgroundColor;
 + (UIColor *) textFieldBackgroundColor;
 + (UIColor *) buttonColors;
++ (UIColor *) highlightedTrackColor;
 
 
 @end

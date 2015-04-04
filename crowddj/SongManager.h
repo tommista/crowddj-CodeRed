@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Spotify/Spotify.h>
 
 @interface SongManager : NSObject
 
@@ -14,5 +15,6 @@
 - (void) initialize;
 - (void) addTrackToPlaylist:(NSString *) url;
 - (void) clearList;
+- (NSDictionary *) getCurrentTrack;
 
 @end

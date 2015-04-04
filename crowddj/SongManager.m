@@ -57,4 +57,8 @@
     
 }
 
+- (NSDictionary *) getCurrentTrack{
+    return [spotifyPlayer currentTrackMetadata];
+}
+
 @end

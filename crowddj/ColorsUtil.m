@@ -38,4 +38,8 @@
     return [UIColor colorWithRed:0.55686 green:0.55686 blue:0.55686 alpha:1.0];
 }
 
++ (UIColor *) highlightedTrackColor{
+    return [UIColor colorWithRed:0.60784 green:0.60784 blue:0.60784 alpha:1.0];
+}
+
 @end
