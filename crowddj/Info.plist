@@ -41,6 +41,7 @@
 	<string>Main</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>icomoon.ttf</string>
 		<string>Impact.ttf</string>
 	</array>
 	<key>UIRequiredDeviceCapabilities</key>

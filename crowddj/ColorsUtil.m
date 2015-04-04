@@ -42,4 +42,8 @@
     return [UIColor colorWithRed:0.60784 green:0.60784 blue:0.60784 alpha:1.0];
 }
 
++ (UIColor *) displayedTrackColor{
+    return [UIColor colorWithRed:0.1882 green:0.1882 blue:0.1882 alpha:0.5];
+}
+
 @end

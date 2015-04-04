@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0B3398F01ACFB55500E41513 /* ColorsUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3398EF1ACFB55500E41513 /* ColorsUtil.m */; };
+		0B3398F31ACFEB0A00E41513 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0B3398F21ACFEB0400E41513 /* icomoon.ttf */; };
+		0B3398F41ACFEB0F00E41513 /* Impact.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0B3398F11ACFE05D00E41513 /* Impact.ttf */; };
 		0B3626B41ACF5B1E00C57C5B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3626B31ACF5B1E00C57C5B /* main.m */; };
 		0B3626B71ACF5B1E00C57C5B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3626B61ACF5B1E00C57C5B /* AppDelegate.m */; };
 		0B3626BA1ACF5B1E00C57C5B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3626B91ACF5B1E00C57C5B /* ViewController.m */; };
@@ -45,6 +47,7 @@
 		0B3398EE1ACFB55500E41513 /* ColorsUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorsUtil.h; sourceTree = "<group>"; };
 		0B3398EF1ACFB55500E41513 /* ColorsUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorsUtil.m; sourceTree = "<group>"; };
 		0B3398F11ACFE05D00E41513 /* Impact.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Impact.ttf; sourceTree = "<group>"; };
+		0B3398F21ACFEB0400E41513 /* icomoon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icomoon.ttf; sourceTree = "<group>"; };
 		0B3626AE1ACF5B1E00C57C5B /* crowddj.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = crowddj.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B3626B21ACF5B1E00C57C5B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B3626B31ACF5B1E00C57C5B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -155,6 +158,7 @@
 		0B3626B11ACF5B1E00C57C5B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0B3398F21ACFEB0400E41513 /* icomoon.ttf */,
 				0B3398F11ACFE05D00E41513 /* Impact.ttf */,
 				0B3626B21ACF5B1E00C57C5B /* Info.plist */,
 				0B3626B31ACF5B1E00C57C5B /* main.m */,
@@ -304,7 +308,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B3398F41ACFEB0F00E41513 /* Impact.ttf in Resources */,
 				0B3626BF1ACF5B1E00C57C5B /* Images.xcassets in Resources */,
+				0B3398F31ACFEB0A00E41513 /* icomoon.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

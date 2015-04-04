@@ -28,6 +28,8 @@
     UILabel *bottomSongLabel;
     UILabel *bottomArtistLabel;
     UIButton *playPauseButton;
+    
+    UILabel *hashtagLabel;
 }
 @end
 
@@ -37,11 +39,27 @@
     
     [super viewDidLoad];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    self.navigationController.navigationBar.translucent = NO;
-    self.title = @"crowddj";
-    self.navigationController.navigationBar.barTintColor = [ColorsUtil topColor];
-    self.navigationController.navigationBar.tintColor = [ColorsUtil titleTextColor];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [ColorsUtil titleTextColor]}];
+    //self.navigationController.navigationBar.translucent = NO;
+    //self.title = @"crowddj";
+    //self.navigationController.navigationBar.barTintColor = [ColorsUtil topColor];
+    //self.navigationController.navigationBar.tintColor = [ColorsUtil titleTextColor];
+    //[self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [ColorsUtil titleTextColor]}];
+    
+    self.navigationController.navigationBar.hidden = YES;
+    
+    UIView *toolbarView = [[UIView alloc] init];
+    toolbarView.translatesAutoresizingMaskIntoConstraints = NO;
+    toolbarView.backgroundColor = [ColorsUtil topColor];
+    [self.view addSubview:toolbarView];
+    
+    UILabel *topLabel = [[UILabel alloc] init];
+    topLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    topLabel.textColor = [ColorsUtil titleTextColor];
+    topLabel.text = @"CROWD DJ";
+    topLabel.font = [UIFont fontWithName:@"DINCondensed-Bold" size:48];
+    topLabel.textAlignment = NSTextAlignmentCenter;
+    [toolbarView addSubview:topLabel];
+    
     self.view.backgroundColor = [ColorsUtil sideBackgroundColor];
     
     _spotifyPlayer = [SpotifyPlayer sharedSpotifyPlayer];
@@ -64,16 +82,18 @@
     textField = [[UITextField alloc] init];
     textField.translatesAutoresizingMaskIntoConstraints = NO;
     textField.backgroundColor = [UIColor clearColor];
-    textField.placeholder = @"Enter Hashtag Here";
+    textField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Enter Hashtag Here" attributes:@{NSForegroundColorAttributeName: [ColorsUtil displayedTrackColor], NSFontAttributeName : [UIFont fontWithName:@"DINCondensed-Bold" size:24.0]}];
     textField.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+    textField.font = [UIFont fontWithName:@"DINCondensed-Bold" size:18];
     [textFieldView addSubview:textField];
     
     hashtagButton = [[UIButton alloc] init];
     hashtagButton.translatesAutoresizingMaskIntoConstraints = NO;
     hashtagButton.backgroundColor = [ColorsUtil buttonColors];
+    [hashtagButton addTarget:self action:@selector(goButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [hashtagButton setTitle:@"Go" forState:UIControlStateNormal];
     [hashtagButton setTitleColor:[ColorsUtil titleTextColor] forState:UIControlStateNormal];
-    [hashtagButton addTarget:self action:@selector(goButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [hashtagButton.titleLabel setFont:[UIFont fontWithName:@"DINCondensed-Bold" size:28]];
     [textFieldView addSubview:hashtagButton];
     
     tableView = [[UITableView alloc] init];
@@ -96,32 +116,38 @@
     playPauseButton = [[UIButton alloc] init];
     playPauseButton.translatesAutoresizingMaskIntoConstraints = NO;
     playPauseButton.backgroundColor = [UIColor clearColor];
-    [playPauseButton setTitle:@"PP" forState:UIControlStateNormal];
-    [playPauseButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    playPauseButton.titleLabel.font = [UIFont fontWithName:@"icomoon" size:24];
+    [playPauseButton setTitle:[NSString stringWithUTF8String:"\ue603"] forState:UIControlStateNormal];
+    [playPauseButton setTitleColor:[ColorsUtil displayedTrackColor] forState:UIControlStateNormal];
     [playPauseButton addTarget:self action:@selector(playPausebuttonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:playPauseButton];
     
     bottomSongLabel = [[UILabel alloc] init];
     bottomSongLabel.translatesAutoresizingMaskIntoConstraints = NO;
     bottomSongLabel.backgroundColor = [UIColor clearColor];
-    bottomSongLabel.textColor = [ColorsUtil titleTextColor];
-    bottomSongLabel.font = [UIFont fontWithName:@"Impact" size:18];
+    bottomSongLabel.textColor = [ColorsUtil displayedTrackColor];
     bottomSongLabel.text = @"Song Label";
+    bottomSongLabel.font = [UIFont fontWithName:@"DINCondensed-Bold" size:24];
     //bottomSongLabel.font = [UIFont systemFontOfSize:18];
     [bottomLabelView addSubview:bottomSongLabel];
     
     bottomArtistLabel = [[UILabel alloc] init];
     bottomArtistLabel.translatesAutoresizingMaskIntoConstraints = NO;
     bottomArtistLabel.backgroundColor = [UIColor clearColor];
-    bottomArtistLabel.textColor = [ColorsUtil titleTextColor];
+    bottomArtistLabel.textColor = [ColorsUtil displayedTrackColor];
     bottomArtistLabel.text = @"Artist Label";
-    bottomArtistLabel.font = [UIFont systemFontOfSize:14];
+    bottomArtistLabel.font = [UIFont fontWithName:@"DINCondensed-Bold" size:18];
+    //bottomArtistLabel.font = [UIFont systemFontOfSize:14];
     [bottomLabelView addSubview:bottomArtistLabel];
     
-    NSDictionary *bindings = NSDictionaryOfVariableBindings(bannerView, centerView, textFieldView, tableView, bottomView, textField, hashtagButton, bottomSongLabel, bottomArtistLabel, bottomLabelView, playPauseButton);
+    NSDictionary *bindings = NSDictionaryOfVariableBindings(bannerView, centerView, textFieldView, tableView, bottomView, textField, hashtagButton, bottomSongLabel, bottomArtistLabel, bottomLabelView, playPauseButton, toolbarView, topLabel);
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[toolbarView]-0-|" options:0 metrics:nil views:bindings]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[bannerView]-0-|" options:0 metrics:nil views:bindings]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[centerView]-10-|" options:0 metrics:nil views:bindings]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[bannerView(==10)]-0-[centerView(>=200)]-10-|" options:0 metrics:nil views:bindings]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[toolbarView(==90)]-0-[bannerView(==10)]-0-[centerView(>=200)]-10-|" options:0 metrics:nil views:bindings]];
+    
+    [toolbarView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[topLabel]-0-|" options:0 metrics:nil views:bindings]];
+    [toolbarView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-25-[topLabel]-0-|" options:0 metrics:nil views:bindings]];
     
     [centerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[textFieldView]-10-|" options:0 metrics:nil views:bindings]];
     [centerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[tableView]-10-|" options:0 metrics:nil views:bindings]];
@@ -160,8 +186,11 @@
 - (IBAction) playPausebuttonPressed:(id)sender{
     if(_spotifyPlayer.isPlaying){
         [_spotifyPlayer pause];
+        [playPauseButton setTitle:[NSString stringWithUTF8String:"\ue603"] forState:UIControlStateNormal];
+        
     } else{
         [_spotifyPlayer play];
+        [playPauseButton setTitle:[NSString stringWithUTF8String:"\ue602"] forState:UIControlStateNormal];
     }
 }
 
@@ -180,6 +209,7 @@
     SPTTrack *track = [dictionary objectForKey:@"trackInfo"];
     bottomSongLabel.text = track.name;
     bottomArtistLabel.text = ((SPTArtist*)[track.artists objectAtIndex:0]).name;
+    [playPauseButton setTitle:[NSString stringWithUTF8String:"\ue602"] forState:UIControlStateNormal];
     
     /*NSArray *songList = [[SongManager sharedSongManager] getSongList];
     for(int i = 0; i < songList.count; i++){
@@ -215,11 +245,11 @@
     
     cell.textLabel.text = thisTrack.name;
     cell.textLabel.textColor = [ColorsUtil sideBackgroundColor];
-    cell.textLabel.font = [UIFont systemFontOfSize:18];
+    cell.textLabel.font = [UIFont fontWithName:@"DINCondensed-Bold" size:24];//[UIFont systemFontOfSize:18];
     
     cell.detailTextLabel.text = ((SPTArtist *)[thisTrack.artists objectAtIndex:0]).name;
     cell.detailTextLabel.textColor = [ColorsUtil sideBackgroundColor];
-    cell.textLabel.font = [UIFont systemFontOfSize:14];
+    cell.textLabel.font = [UIFont fontWithName:@"DINCondensed-Bold" size:18];//[UIFont systemFontOfSize:14];
     
     return cell;
 }

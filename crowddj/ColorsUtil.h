@@ -19,6 +19,7 @@
 + (UIColor *) textFieldBackgroundColor;
 + (UIColor *) buttonColors;
 + (UIColor *) highlightedTrackColor;
++ (UIColor *) displayedTrackColor;
 
 
 @end
