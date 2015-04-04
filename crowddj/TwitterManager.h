@@ -10,4 +10,8 @@
 
 @interface TwitterManager : NSObject
 
++(TwitterManager *) sharedTwitterManager;
+- (void) initialize;
+- (void) doSomething;
+
 @end
