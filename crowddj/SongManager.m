@@ -8,9 +8,11 @@
 
 #import "SongManager.h"
 #import <Spotify/Spotify.h>
+#import "SpotifyPlayer.h"
 
 @interface SongManager(){
     NSMutableArray *songList;
+    SpotifyPlayer *spotifyPlayer;
 }
 @end
 
@@ -27,6 +29,8 @@
 }
 
 - (void) initialize{
+    songList = [[NSMutableArray alloc] init];
+    spotifyPlayer = [SpotifyPlayer sharedSpotifyPlayer];
 }
 
 - (void) clearList{
@@ -46,6 +50,8 @@
         NSLog(@"track: %@", track);
         if(track != nil){
             [songList addObject:track];
+            //[spotifyPlayer playTrack:url];
+            [spotifyPlayer queueTrack:url];
         }
     }];
     

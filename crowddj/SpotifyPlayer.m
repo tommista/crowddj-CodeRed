@@ -33,8 +33,6 @@ static NSString * const kTokenSwapServiceURL = @"http://localhost:1234/swap";
 
 - (void) play{
     
-    [[TwitterManager sharedTwitterManager] fetchTweetsWithHashtag:@"#crowddj"];
-    
     if(!_player.isPlaying){
         [_player setIsPlaying:YES callback:^(NSError *error) {
         }];
@@ -62,6 +60,21 @@ static NSString * const kTokenSwapServiceURL = @"http://localhost:1234/swap";
                                 return;
                             }
                             [self.player playTrackProvider:track callback:nil];
+                            
+                        }];
+}
+
+- (void) queueTrack:(NSString *)track{
+    [SPTRequest requestItemAtURI:[NSURL URLWithString:track]
+                     withSession:nil
+                        callback:^(NSError *error, SPTTrack *track) {
+                            
+                            if (error != nil) {
+                                NSLog(@"*** Track lookup got error %@", error);
+                                return;
+                            }
+                            [self.player queueTrackProvider:track clearQueue:NO callback:nil];
+                            //[self.player queuePlay:nil];
                             
                         }];
 }

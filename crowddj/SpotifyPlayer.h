@@ -15,6 +15,7 @@
 
 -(void)playUsingSession:(SPTSession *)session;
 -(void) playTrack: (NSString *) track;
+- (void) queueTrack:(NSString *)track;
 - (void) initialize;
 -(void) pause;
 -(void) play;

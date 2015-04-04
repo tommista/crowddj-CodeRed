@@ -7,10 +7,12 @@
 //
 
 #import "ViewController.h"
+#import "TwitterManager.h"
 
 @interface ViewController (){
     UIButton *playButton;
     UIButton *pauseButton;
+    UIButton *refreshButton;
 }
 @end
 
@@ -24,7 +26,6 @@
     _spotifyPlayer = [SpotifyPlayer sharedSpotifyPlayer];
     
     playButton = [[UIButton alloc] init];
-    //[playButton setFrame:CGRectMake(0, 0, 200, 200)];
     [playButton setTitle:@"Play" forState:UIControlStateNormal];
     [playButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     playButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -34,7 +35,6 @@
     [self.view addSubview:playButton];
     
     pauseButton = [[UIButton alloc] init];
-    //[pauseButton setFrame:CGRectMake(0, 200, 200, 200)];
     [pauseButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [pauseButton setTitle:@"Pause" forState:UIControlStateNormal];
     pauseButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -42,6 +42,15 @@
     pauseButton.layer.borderWidth = 1.0;
     [pauseButton addTarget:self action:@selector(pauseButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:pauseButton];
+    
+    refreshButton = [[UIButton alloc] init];
+    [refreshButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [refreshButton setTitle:@"Refresh" forState:UIControlStateNormal];
+    refreshButton.translatesAutoresizingMaskIntoConstraints = NO;
+    refreshButton.layer.borderColor = [[UIColor blackColor] CGColor];
+    refreshButton.layer.borderWidth = 1.0;
+    [refreshButton addTarget:self action:@selector(refreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:refreshButton];
     
     // Do any additional setup after loading the view, typically from a nib.
 }
@@ -51,10 +60,11 @@
     
     NSLog(@"view will appear");
     
-    NSDictionary *bindings = NSDictionaryOfVariableBindings(playButton, pauseButton);
+    NSDictionary *bindings = NSDictionaryOfVariableBindings(playButton, pauseButton, refreshButton);
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[playButton]-10-|" options:0 metrics:nil views:bindings]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[pauseButton]-10-|" options:0 metrics:nil views:bindings]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[playButton(>=200)]-10-[pauseButton(>=200)]-10-|" options:0 metrics:nil views:bindings]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[refreshButton]-10-|" options:0 metrics:nil views:bindings]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[playButton(==100)]-10-[pauseButton(==100)]-10-[refreshButton(>=100)]-10-|" options:0 metrics:nil views:bindings]];
     
 }
 
@@ -69,6 +79,10 @@
 
 -(IBAction) pauseButtonPressed:(id)sender{
     [_spotifyPlayer pause];
+}
+
+- (IBAction) refreshButtonPressed:(id)sender{
+    [[TwitterManager sharedTwitterManager] fetchTweetsWithHashtag:@"#crowddj"];
 }
 
 @end
