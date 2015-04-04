@@ -30,6 +30,7 @@
     UIButton *playPauseButton;
     
     UILabel *hashtagLabel;
+    UIImageView *imageView;
 }
 @end
 
@@ -108,6 +109,11 @@
     bottomView.backgroundColor = [ColorsUtil textFieldBackgroundColor];
     [centerView addSubview:bottomView];
     
+    imageView = [[UIImageView alloc] init];
+    imageView.translatesAutoresizingMaskIntoConstraints = NO;
+    imageView.backgroundColor = [UIColor clearColor];
+    [bottomView addSubview:imageView];
+    
     bottomLabelView = [[UIView alloc] init];
     bottomLabelView.translatesAutoresizingMaskIntoConstraints = NO;
     bottomLabelView.backgroundColor = [UIColor clearColor];
@@ -140,7 +146,7 @@
     //bottomArtistLabel.font = [UIFont systemFontOfSize:14];
     [bottomLabelView addSubview:bottomArtistLabel];
     
-    NSDictionary *bindings = NSDictionaryOfVariableBindings(bannerView, centerView, textFieldView, tableView, bottomView, textField, hashtagButton, bottomSongLabel, bottomArtistLabel, bottomLabelView, playPauseButton, toolbarView, topLabel);
+    NSDictionary *bindings = NSDictionaryOfVariableBindings(bannerView, centerView, textFieldView, tableView, bottomView, textField, hashtagButton, bottomSongLabel, bottomArtistLabel, bottomLabelView, playPauseButton, toolbarView, topLabel, imageView);
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[toolbarView]-0-|" options:0 metrics:nil views:bindings]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[bannerView]-0-|" options:0 metrics:nil views:bindings]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[centerView]-10-|" options:0 metrics:nil views:bindings]];
@@ -152,13 +158,14 @@
     [centerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[textFieldView]-10-|" options:0 metrics:nil views:bindings]];
     [centerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[tableView]-10-|" options:0 metrics:nil views:bindings]];
     [centerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[bottomView]-10-|" options:0 metrics:nil views:bindings]];
-    [centerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[textFieldView(==60)]-10-[tableView]-10-[bottomView(==60)]-10-|" options:0 metrics:nil views:bindings]];
+    [centerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[textFieldView(==60)]-0-[tableView]-10-[bottomView(==60)]-10-|" options:0 metrics:nil views:bindings]];
     
     [textFieldView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[textField]-10-[hashtagButton(==40)]-10-|" options:0 metrics:nil views:bindings]];
     [textFieldView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[textField]-10-|" options:0 metrics:nil views:bindings]];
     [textFieldView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[hashtagButton]-10-|" options:0 metrics:nil views:bindings]];
     
-    [bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[bottomLabelView]-10-[playPauseButton(==25)]-10-|" options:0 metrics:nil views:bindings]];
+    [bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[imageView(==60)]-10-[bottomLabelView]-10-[playPauseButton(==25)]-10-|" options:0 metrics:nil views:bindings]];
+    [bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[imageView]-0-|" options:0 metrics:nil views:bindings]];
     [bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[bottomLabelView]-0-|" options:0 metrics:nil views:bindings]];
     [bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[playPauseButton]-0-|" options:0 metrics:nil views:bindings]];
     
@@ -211,6 +218,21 @@
     bottomSongLabel.text = track.name;
     bottomArtistLabel.text = ((SPTArtist*)[track.artists objectAtIndex:0]).name;
     [playPauseButton setTitle:[NSString stringWithUTF8String:"\ue602"] forState:UIControlStateNormal];
+    
+    dispatch_async(dispatch_get_global_queue(0,0), ^{
+        NSData * data = [[NSData alloc] initWithContentsOfURL:track.album.smallestCover.imageURL];
+        if ( data == nil )
+        {
+        }
+        else
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIImage *downloadedImage = [UIImage imageWithData:data scale:1.0];
+                [imageView setImage:downloadedImage];
+            });
+        }
+    });
+    
     [[TwitterManager sharedTwitterManager] refresh];
     
     /*NSArray *songList = [[SongManager sharedSongManager] getSongList];
