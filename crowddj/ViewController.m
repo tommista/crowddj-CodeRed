@@ -72,6 +72,8 @@
     tableView = [[UITableView alloc] init];
     tableView.translatesAutoresizingMaskIntoConstraints = NO;
     tableView.backgroundColor = [ColorsUtil textFieldBackgroundColor];
+    tableView.dataSource = self;
+    tableView.delegate = self;
     [centerView addSubview:tableView];
     
     bottomView = [[UIView alloc] init];
@@ -149,6 +151,38 @@
 
 - (IBAction) refreshButtonPressed:(id)sender{
     [[TwitterManager sharedTwitterManager] fetchTweetsWithHashtag:@"#crowddj"];
+}
+
+#pragma mark - UITableViewDataSource methods
+
+- (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
+}
+
+- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 10;
+}
+
+- (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *cell = [[UITableViewCell alloc] init];
+    cell.backgroundColor = [UIColor clearColor];
+    return cell;
+}
+
+#pragma mark - UITableViewDelegate methods
+
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 50.0;
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 10.0;
+}
+
+- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    UIView *view = [[UIView alloc] init];
+    view.backgroundColor = [ColorsUtil topColor];
+    return view;
 }
 
 @end
