@@ -198,7 +198,8 @@
     [textField resignFirstResponder];
     
     if(textField.text != nil && ![textField.text isEqualToString:@""]){
-        [[TwitterManager sharedTwitterManager] fetchTweetsWithHashtag:textField.text];
+        [[TwitterManager sharedTwitterManager] setHashtag:textField.text];
+        //[[TwitterManager sharedTwitterManager] fetchTweetsWithHashtag:textField.text];
         [tableView reloadData];
     }
 }
@@ -210,6 +211,7 @@
     bottomSongLabel.text = track.name;
     bottomArtistLabel.text = ((SPTArtist*)[track.artists objectAtIndex:0]).name;
     [playPauseButton setTitle:[NSString stringWithUTF8String:"\ue602"] forState:UIControlStateNormal];
+    [[TwitterManager sharedTwitterManager] refresh];
     
     /*NSArray *songList = [[SongManager sharedSongManager] getSongList];
     for(int i = 0; i < songList.count; i++){

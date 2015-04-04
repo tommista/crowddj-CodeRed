@@ -14,5 +14,6 @@
 - (void) initialize;
 - (void) fetchTweetsWithHashtag: (NSString *) hashtag;
 - (void) setHashtag: (NSString *)value;
+- (void) refresh;
 
 @end

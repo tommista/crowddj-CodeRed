@@ -40,6 +40,10 @@ static NSString * const accessToken = @"AAAAAAAAAAAAAAAAAAAAALXqdgAAAAAAMfVikYHy
     [self fetchTweetsWithHashtag:hashtag];
 }
 
+- (void) refresh{
+    [self fetchTweetsWithHashtag:hashtag];
+}
+
 - (void) fetchTweetsWithHashtag: (NSString *) tag{
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
