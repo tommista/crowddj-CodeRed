@@ -8,6 +8,20 @@
 
 #import "SpotifyPlayer.h"
 
+@interface SpotifyPlayer(){
+    
+}
+@end
+
 @implementation SpotifyPlayer
+
++ (SpotifyPlayer *) sharedSpotifyPlayer{
+    static SpotifyPlayer *instance = nil;
+    if(!instance){
+        instance = [[self alloc] init];
+    }
+    
+    return instance;
+}
 
 @end

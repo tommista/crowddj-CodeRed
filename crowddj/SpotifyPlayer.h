@@ -10,4 +10,6 @@
 
 @interface SpotifyPlayer : NSObject
 
++ (SpotifyPlayer *) sharedSpotifyPlayer;
+
 @end
