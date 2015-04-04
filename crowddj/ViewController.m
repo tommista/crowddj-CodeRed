@@ -17,6 +17,8 @@
     UIButton *playButton;
     UIButton *pauseButton;
     UIButton *refreshButton;
+    UITableView *tableView;
+    UIView *bottomView;
 }
 @end
 
@@ -50,6 +52,16 @@
     textFieldView.backgroundColor = [ColorsUtil textFieldBackgroundColor];
     [centerView addSubview:textFieldView];
     
+    tableView = [[UITableView alloc] init];
+    tableView.translatesAutoresizingMaskIntoConstraints = NO;
+    tableView.backgroundColor = [ColorsUtil textFieldBackgroundColor];
+    [centerView addSubview:tableView];
+    
+    bottomView = [[UIView alloc] init];
+    bottomView.translatesAutoresizingMaskIntoConstraints = NO;
+    bottomView.backgroundColor = [ColorsUtil textFieldBackgroundColor];
+    [centerView addSubview:bottomView];
+    
     /*playButton = [[UIButton alloc] init];
     [playButton setTitle:@"Play" forState:UIControlStateNormal];
     [playButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -77,13 +89,15 @@
     [refreshButton addTarget:self action:@selector(refreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:refreshButton];*/
     
-    NSDictionary *bindings = NSDictionaryOfVariableBindings(bannerView, centerView, textFieldView);
+    NSDictionary *bindings = NSDictionaryOfVariableBindings(bannerView, centerView, textFieldView, tableView, bottomView);
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[bannerView]-0-|" options:0 metrics:nil views:bindings]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[centerView]-10-|" options:0 metrics:nil views:bindings]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[bannerView(==10)]-0-[centerView(>=200)]-10-|" options:0 metrics:nil views:bindings]];
     
     [centerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[textFieldView]-10-|" options:0 metrics:nil views:bindings]];
-    [centerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[textFieldView(==60)]|" options:0 metrics:nil views:bindings]];
+    [centerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[tableView]-10-|" options:0 metrics:nil views:bindings]];
+    [centerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[bottomView]-10-|" options:0 metrics:nil views:bindings]];
+    [centerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[textFieldView(==60)]-10-[tableView]-10-[bottomView(==60)]-10-|" options:0 metrics:nil views:bindings]];
     
     
     
