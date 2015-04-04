@@ -12,7 +12,7 @@ static NSString * const kCallbackURL = @"crowddj://spotify";
 static NSString * const kTokenSwapServiceURL = @"http://localhost:1234/swap";
 
 @interface AppDelegate ()
-@property (nonatomic, readwrite) SPTAudioStreamingController *player;
+//@property (nonatomic, readwrite) SPTAudioStreamingController *player;
 @end
 
 @implementation AppDelegate
@@ -35,10 +35,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 }
 
 // Handle auth callback
--(BOOL)application:(UIApplication *)application
-           openURL:(NSURL *)url
- sourceApplication:(NSString *)sourceApplication
-        annotation:(id)annotation {
+-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     
     // Ask SPTAuth if the URL given is a Spotify authentication callback
     if ([[SPTAuth defaultInstance]
@@ -57,7 +54,8 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
              }
              
              // Call the -playUsingSession: method to play a track
-             [self playUsingSession:session];
+             SpotifyPlayer *player = [SpotifyPlayer sharedSpotifyPlayer];
+             [player playUsingSession:session];
          }];
         return YES;
     }
@@ -65,7 +63,8 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     return NO;
 }
 
--(void)playUsingSession:(SPTSession *)session {
+/*-(void)playUsingSession:(SPTSession *)session {
+    
     
     // Create a new player if needed
     if (self.player == nil) {
@@ -92,6 +91,6 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
                             }];
     }];
     
-}
+}*/
 
 @end
