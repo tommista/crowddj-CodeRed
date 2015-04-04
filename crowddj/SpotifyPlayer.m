@@ -18,6 +18,7 @@ static NSString * const kTokenSwapServiceURL = @"http://localhost:1234/swap";
     static SpotifyPlayer *instance = nil;
     if(!instance){
         instance = [[self alloc] init];
+        [instance initialize];
     }
     
     return instance;
