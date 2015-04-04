@@ -8,8 +8,12 @@
 
 #import "ViewController.h"
 #import "TwitterManager.h"
+#import "ColorsUtil.h"
 
 @interface ViewController (){
+    UIView *bannerView;
+    UIView *centerView;
+    UIView *textFieldView;
     UIButton *playButton;
     UIButton *pauseButton;
     UIButton *refreshButton;
@@ -21,11 +25,32 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     self.navigationController.navigationBar.translucent = NO;
+    self.title = @"crowddj";
+    self.navigationController.navigationBar.barTintColor = [ColorsUtil topColor];
+    self.navigationController.navigationBar.tintColor = [ColorsUtil titleTextColor];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [ColorsUtil titleTextColor]}];
+    self.view.backgroundColor = [ColorsUtil sideBackgroundColor];
     
     _spotifyPlayer = [SpotifyPlayer sharedSpotifyPlayer];
     
-    playButton = [[UIButton alloc] init];
+    bannerView = [[UIView alloc] init];
+    bannerView.translatesAutoresizingMaskIntoConstraints = NO;
+    bannerView.backgroundColor = [ColorsUtil topShadowColor];
+    [self.view addSubview:bannerView];
+    
+    centerView = [[UIView alloc] init];
+    centerView.translatesAutoresizingMaskIntoConstraints = NO;
+    centerView.backgroundColor = [ColorsUtil centerBackgroundColor];
+    [self.view addSubview:centerView];
+    
+    textFieldView = [[UIView alloc] init];
+    textFieldView.translatesAutoresizingMaskIntoConstraints = NO;
+    textFieldView.backgroundColor = [ColorsUtil textFieldBackgroundColor];
+    [centerView addSubview:textFieldView];
+    
+    /*playButton = [[UIButton alloc] init];
     [playButton setTitle:@"Play" forState:UIControlStateNormal];
     [playButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     playButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -50,22 +75,28 @@
     refreshButton.layer.borderColor = [[UIColor blackColor] CGColor];
     refreshButton.layer.borderWidth = 1.0;
     [refreshButton addTarget:self action:@selector(refreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:refreshButton];
+    [self.view addSubview:refreshButton];*/
+    
+    NSDictionary *bindings = NSDictionaryOfVariableBindings(bannerView, centerView, textFieldView);
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[bannerView]-0-|" options:0 metrics:nil views:bindings]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[centerView]-10-|" options:0 metrics:nil views:bindings]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[bannerView(==10)]-0-[centerView(>=200)]-10-|" options:0 metrics:nil views:bindings]];
+    
+    [centerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[textFieldView]-10-|" options:0 metrics:nil views:bindings]];
+    [centerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[textFieldView(==60)]|" options:0 metrics:nil views:bindings]];
+    
+    
+    
+    //[self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[playButton]-10-|" options:0 metrics:nil views:bindings]];
+    //[self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[pauseButton]-10-|" options:0 metrics:nil views:bindings]];
+    //[self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[refreshButton]-10-|" options:0 metrics:nil views:bindings]];
+    //[self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[bannerView(==10)]-0-[playButton(==100)]-10-[pauseButton(==100)]-10-[refreshButton(>=100)]-10-|" options:0 metrics:nil views:bindings]];
     
     // Do any additional setup after loading the view, typically from a nib.
 }
 
 - (void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
-    NSLog(@"view will appear");
-    
-    NSDictionary *bindings = NSDictionaryOfVariableBindings(playButton, pauseButton, refreshButton);
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[playButton]-10-|" options:0 metrics:nil views:bindings]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[pauseButton]-10-|" options:0 metrics:nil views:bindings]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[refreshButton]-10-|" options:0 metrics:nil views:bindings]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[playButton(==100)]-10-[pauseButton(==100)]-10-[refreshButton(>=100)]-10-|" options:0 metrics:nil views:bindings]];
-    
 }
 
 - (void)didReceiveMemoryWarning {

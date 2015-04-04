@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B3398F01ACFB55500E41513 /* ColorsUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3398EF1ACFB55500E41513 /* ColorsUtil.m */; };
 		0B3626B41ACF5B1E00C57C5B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3626B31ACF5B1E00C57C5B /* main.m */; };
 		0B3626B71ACF5B1E00C57C5B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3626B61ACF5B1E00C57C5B /* AppDelegate.m */; };
 		0B3626BA1ACF5B1E00C57C5B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3626B91ACF5B1E00C57C5B /* ViewController.m */; };
@@ -41,6 +42,8 @@
 
 /* Begin PBXFileReference section */
 		011C9BD953A7E0A1E88A270A /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		0B3398EE1ACFB55500E41513 /* ColorsUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorsUtil.h; sourceTree = "<group>"; };
+		0B3398EF1ACFB55500E41513 /* ColorsUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorsUtil.m; sourceTree = "<group>"; };
 		0B3626AE1ACF5B1E00C57C5B /* crowddj.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = crowddj.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B3626B21ACF5B1E00C57C5B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B3626B31ACF5B1E00C57C5B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -142,6 +145,8 @@
 				0B3626E11ACF7F6200C57C5B /* TwitterManager.m */,
 				0B3627001ACF8FF200C57C5B /* SongManager.h */,
 				0B3627011ACF8FF200C57C5B /* SongManager.m */,
+				0B3398EE1ACFB55500E41513 /* ColorsUtil.h */,
+				0B3398EF1ACFB55500E41513 /* ColorsUtil.m */,
 			);
 			path = crowddj;
 			sourceTree = "<group>";
@@ -355,6 +360,7 @@
 				0B3626FD1ACF88F500C57C5B /* AFURLRequestSerialization.m in Sources */,
 				0B3626E21ACF7F6200C57C5B /* TwitterManager.m in Sources */,
 				0B3626FE1ACF88F500C57C5B /* AFURLResponseSerialization.m in Sources */,
+				0B3398F01ACFB55500E41513 /* ColorsUtil.m in Sources */,
 				0B3626BA1ACF5B1E00C57C5B /* ViewController.m in Sources */,
 				0B3626DF1ACF636900C57C5B /* SpotifyPlayer.m in Sources */,
 				0B3626F81ACF88F500C57C5B /* AFHTTPRequestOperationManager.m in Sources */,
