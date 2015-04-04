@@ -46,6 +46,12 @@ static NSString * const kTokenSwapServiceURL = @"http://localhost:1234/swap";
     }
 }
 
+- (void) skipTrack{
+    if(_player.isPlaying){
+        [_player skipNext:nil];
+    }
+}
+
 - (BOOL) isPlaying{
     return _player.isPlaying;
 }

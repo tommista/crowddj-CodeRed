@@ -19,6 +19,7 @@
 - (void) initialize;
 -(void) pause;
 -(void) play;
+- (void) skipTrack;
 -(bool) isPlaying;
 - (NSDictionary *) currentTrackMetadata;
 

@@ -26,8 +26,8 @@
     UIView *bottomLabelView;
     UILabel *bottomSongLabel;
     UILabel *bottomArtistLabel;
-    UILabel *playPauseButton;
-    UILabel *nextTrackButton;
+    UIButton *playPauseButton;
+    UIButton *nextTrackButton;
 }
 @end
 
@@ -73,6 +73,7 @@
     hashtagButton.backgroundColor = [ColorsUtil buttonColors];
     [hashtagButton setTitle:@"Go" forState:UIControlStateNormal];
     [hashtagButton setTitleColor:[ColorsUtil titleTextColor] forState:UIControlStateNormal];
+    [hashtagButton addTarget:self action:@selector(goButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [textFieldView addSubview:hashtagButton];
     
     tableView = [[UITableView alloc] init];
@@ -92,18 +93,20 @@
     bottomLabelView.backgroundColor = [UIColor clearColor];
     [bottomView addSubview:bottomLabelView];
     
-    playPauseButton = [[UILabel alloc] init];
+    playPauseButton = [[UIButton alloc] init];
     playPauseButton.translatesAutoresizingMaskIntoConstraints = NO;
     playPauseButton.backgroundColor = [UIColor clearColor];
-    playPauseButton.text = @"PP";
-    playPauseButton.textColor = [UIColor blackColor];
+    [playPauseButton setTitle:@"PP" forState:UIControlStateNormal];
+    [playPauseButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [playPauseButton addTarget:self action:@selector(playPausebuttonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:playPauseButton];
     
-    nextTrackButton = [[UILabel alloc] init];
+    nextTrackButton = [[UIButton alloc] init];
     nextTrackButton.translatesAutoresizingMaskIntoConstraints = NO;
     nextTrackButton.backgroundColor = [UIColor clearColor];
-    nextTrackButton.text = @"NT";
-    nextTrackButton.textColor = [UIColor blackColor];
+    [nextTrackButton setTitle:@"NT" forState:UIControlStateNormal];
+    [nextTrackButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [nextTrackButton addTarget:self action:@selector(nextTrackButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:nextTrackButton];
     
     bottomSongLabel = [[UILabel alloc] init];
@@ -121,33 +124,6 @@
     bottomArtistLabel.text = @"Artist Label";
     bottomArtistLabel.font = [UIFont systemFontOfSize:14];
     [bottomLabelView addSubview:bottomArtistLabel];
-    
-    /*playButton = [[UIButton alloc] init];
-    [playButton setTitle:@"Play" forState:UIControlStateNormal];
-    [playButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    playButton.translatesAutoresizingMaskIntoConstraints = NO;
-    playButton.layer.borderColor = [[UIColor blackColor] CGColor];
-    playButton.layer.borderWidth = 1.0;
-    [playButton addTarget:self action:@selector(playButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:playButton];
-    
-    pauseButton = [[UIButton alloc] init];
-    [pauseButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [pauseButton setTitle:@"Pause" forState:UIControlStateNormal];
-    pauseButton.translatesAutoresizingMaskIntoConstraints = NO;
-    pauseButton.layer.borderColor = [[UIColor blackColor] CGColor];
-    pauseButton.layer.borderWidth = 1.0;
-    [pauseButton addTarget:self action:@selector(pauseButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:pauseButton];
-    
-    refreshButton = [[UIButton alloc] init];
-    [refreshButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [refreshButton setTitle:@"Refresh" forState:UIControlStateNormal];
-    refreshButton.translatesAutoresizingMaskIntoConstraints = NO;
-    refreshButton.layer.borderColor = [[UIColor blackColor] CGColor];
-    refreshButton.layer.borderWidth = 1.0;
-    [refreshButton addTarget:self action:@selector(refreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:refreshButton];*/
     
     NSDictionary *bindings = NSDictionaryOfVariableBindings(bannerView, centerView, textFieldView, tableView, bottomView, textField, hashtagButton, bottomSongLabel, bottomArtistLabel, bottomLabelView, playPauseButton,
                                                             nextTrackButton);
@@ -172,13 +148,6 @@
     [bottomLabelView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[bottomSongLabel]-10-|" options:0 metrics:nil views:bindings]];
     [bottomLabelView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[bottomArtistLabel]-10-|" options:0 metrics:nil views:bindings]];
     [bottomLabelView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-5-[bottomSongLabel(==25)]-5-[bottomArtistLabel(==20)]-5-|" options:0 metrics:nil views:bindings]];
-    
-    //[self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[playButton]-10-|" options:0 metrics:nil views:bindings]];
-    //[self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[pauseButton]-10-|" options:0 metrics:nil views:bindings]];
-    //[self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[refreshButton]-10-|" options:0 metrics:nil views:bindings]];
-    //[self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[bannerView(==10)]-0-[playButton(==100)]-10-[pauseButton(==100)]-10-[refreshButton(>=100)]-10-|" options:0 metrics:nil views:bindings]];
-    
-    // Do any additional setup after loading the view, typically from a nib.
 }
 
 - (void) viewWillAppear:(BOOL)animated{
@@ -187,19 +156,34 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
-- (IBAction) playButtonPressed:(id)sender{
+/*- (IBAction) playButtonPressed:(id)sender{
     [_spotifyPlayer play];
 }
 
 -(IBAction) pauseButtonPressed:(id)sender{
     [_spotifyPlayer pause];
+}*/
+
+- (IBAction) playPausebuttonPressed:(id)sender{
+    if(_spotifyPlayer.isPlaying){
+        [_spotifyPlayer pause];
+    } else{
+        [_spotifyPlayer play];
+    }
 }
 
-- (IBAction) refreshButtonPressed:(id)sender{
+/*- (IBAction) refreshButtonPressed:(id)sender{
     [[TwitterManager sharedTwitterManager] fetchTweetsWithHashtag:@"#crowddj"];
+}*/
+
+- (IBAction) goButtonPressed:(id)sender{
+    [[TwitterManager sharedTwitterManager] fetchTweetsWithHashtag:@"#crowddj"];
+}
+
+- (IBAction) nextTrackButtonPressed:(id)sender{
+    [_spotifyPlayer skipTrack];
 }
 
 #pragma mark - UITableViewDataSource methods
