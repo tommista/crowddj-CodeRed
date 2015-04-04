@@ -12,6 +12,7 @@
 
 @interface TwitterManager(){
     NSMutableDictionary *tweetList;
+    NSString *hashtag;
 }
 @end
 
@@ -33,12 +34,18 @@ static NSString * const accessToken = @"AAAAAAAAAAAAAAAAAAAAALXqdgAAAAAAMfVikYHy
     tweetList = [[NSMutableDictionary alloc] init];
 }
 
-- (void) fetchTweetsWithHashtag: (NSString *) hashtag{
+- (void) setHashtag: (NSString *)value{
+    tweetList = [[NSMutableDictionary alloc] init];
+    hashtag = value;
+    [self fetchTweetsWithHashtag:hashtag];
+}
+
+- (void) fetchTweetsWithHashtag: (NSString *) tag{
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     [manager.requestSerializer setValue:@"Bearer AAAAAAAAAAAAAAAAAAAAALXqdgAAAAAAMfVikYHyimgiQKPW9bqJGndfngk%3Dad7RyM7WUMG5knJcMm7PKICeoOLOfvORmqBZUlvvTVV6J3FI81" forHTTPHeaderField:@"Authorization"];
     
-    NSDictionary *parameters = @{@"q": hashtag};
+    NSDictionary *parameters = @{@"q": tag};
     
     [manager GET:@"https://api.twitter.com/1.1/search/tweets.json" parameters:parameters success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
         NSLog(@"JSON: %@", responseObject);

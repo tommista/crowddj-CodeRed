@@ -50,11 +50,14 @@
         NSLog(@"track: %@", track);
         if(track != nil){
             [songList addObject:track];
-            //[spotifyPlayer playTrack:url];
             [spotifyPlayer queueTrack:url];
         }
     }];
     
+}
+
+- (NSArray *) getSongList{
+    return songList;
 }
 
 - (NSDictionary *) getCurrentTrack{

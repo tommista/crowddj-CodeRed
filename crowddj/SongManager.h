@@ -15,6 +15,7 @@
 - (void) initialize;
 - (void) addTrackToPlaylist:(NSString *) url;
 - (void) clearList;
+- (NSArray *) getSongList;
 - (NSDictionary *) getCurrentTrack;
 
 @end

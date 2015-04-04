@@ -81,8 +81,7 @@ static NSString * const kTokenSwapServiceURL = @"http://localhost:1234/swap";
                                 return;
                             }
                             [self.player queueTrackProvider:track clearQueue:NO callback:nil];
-                            //[self.player queuePlay:nil];
-                            
+                            [[NSNotificationCenter defaultCenter] postNotificationName: @"TrackAdded" object:nil userInfo:nil];
                         }];
 }
 

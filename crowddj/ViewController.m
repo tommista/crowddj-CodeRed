@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "TwitterManager.h"
 #import "ColorsUtil.h"
+#import "SongManager.h"
 
 @interface ViewController (){
     UIView *bannerView;
@@ -27,7 +28,6 @@
     UILabel *bottomSongLabel;
     UILabel *bottomArtistLabel;
     UIButton *playPauseButton;
-    UIButton *nextTrackButton;
 }
 @end
 
@@ -101,20 +101,13 @@
     [playPauseButton addTarget:self action:@selector(playPausebuttonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:playPauseButton];
     
-    nextTrackButton = [[UIButton alloc] init];
-    nextTrackButton.translatesAutoresizingMaskIntoConstraints = NO;
-    nextTrackButton.backgroundColor = [UIColor clearColor];
-    [nextTrackButton setTitle:@"NT" forState:UIControlStateNormal];
-    [nextTrackButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [nextTrackButton addTarget:self action:@selector(nextTrackButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [bottomView addSubview:nextTrackButton];
-    
     bottomSongLabel = [[UILabel alloc] init];
     bottomSongLabel.translatesAutoresizingMaskIntoConstraints = NO;
     bottomSongLabel.backgroundColor = [UIColor clearColor];
     bottomSongLabel.textColor = [ColorsUtil titleTextColor];
+    bottomSongLabel.font = [UIFont fontWithName:@"Impact" size:18];
     bottomSongLabel.text = @"Song Label";
-    bottomSongLabel.font = [UIFont systemFontOfSize:18];
+    //bottomSongLabel.font = [UIFont systemFontOfSize:18];
     [bottomLabelView addSubview:bottomSongLabel];
     
     bottomArtistLabel = [[UILabel alloc] init];
@@ -125,8 +118,7 @@
     bottomArtistLabel.font = [UIFont systemFontOfSize:14];
     [bottomLabelView addSubview:bottomArtistLabel];
     
-    NSDictionary *bindings = NSDictionaryOfVariableBindings(bannerView, centerView, textFieldView, tableView, bottomView, textField, hashtagButton, bottomSongLabel, bottomArtistLabel, bottomLabelView, playPauseButton,
-                                                            nextTrackButton);
+    NSDictionary *bindings = NSDictionaryOfVariableBindings(bannerView, centerView, textFieldView, tableView, bottomView, textField, hashtagButton, bottomSongLabel, bottomArtistLabel, bottomLabelView, playPauseButton);
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[bannerView]-0-|" options:0 metrics:nil views:bindings]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[centerView]-10-|" options:0 metrics:nil views:bindings]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[bannerView(==10)]-0-[centerView(>=200)]-10-|" options:0 metrics:nil views:bindings]];
@@ -140,10 +132,9 @@
     [textFieldView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[textField]-10-|" options:0 metrics:nil views:bindings]];
     [textFieldView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[hashtagButton]-10-|" options:0 metrics:nil views:bindings]];
     
-    [bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[bottomLabelView]-10-[playPauseButton(==25)]-10-[nextTrackButton(==25)]-10-|" options:0 metrics:nil views:bindings]];
+    [bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[bottomLabelView]-10-[playPauseButton(==25)]-10-|" options:0 metrics:nil views:bindings]];
     [bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[bottomLabelView]-0-|" options:0 metrics:nil views:bindings]];
     [bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[playPauseButton]-0-|" options:0 metrics:nil views:bindings]];
-    [bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[nextTrackButton]-0-|" options:0 metrics:nil views:bindings]];
     
     [bottomLabelView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[bottomSongLabel]-10-|" options:0 metrics:nil views:bindings]];
     [bottomLabelView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[bottomArtistLabel]-10-|" options:0 metrics:nil views:bindings]];
@@ -153,6 +144,7 @@
 - (void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNewSongNotification:) name:@"NewTrackPlaying" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(trackAddedNotification:) name:@"TrackAdded" object:nil];
 }
 
 - (void) viewWillDisappear:(BOOL)animated{
@@ -174,11 +166,12 @@
 }
 
 - (IBAction) goButtonPressed:(id)sender{
-    [[TwitterManager sharedTwitterManager] fetchTweetsWithHashtag:@"#crowddj"];
-}
-
-- (IBAction) nextTrackButtonPressed:(id)sender{
-    [_spotifyPlayer skipTrack];
+    [textField resignFirstResponder];
+    
+    if(textField.text != nil && ![textField.text isEqualToString:@""]){
+        [[TwitterManager sharedTwitterManager] fetchTweetsWithHashtag:textField.text];
+        [tableView reloadData];
+    }
 }
 
 - (void) receiveNewSongNotification:(NSNotification *) notification
@@ -187,6 +180,19 @@
     SPTTrack *track = [dictionary objectForKey:@"trackInfo"];
     bottomSongLabel.text = track.name;
     bottomArtistLabel.text = ((SPTArtist*)[track.artists objectAtIndex:0]).name;
+    
+    /*NSArray *songList = [[SongManager sharedSongManager] getSongList];
+    for(int i = 0; i < songList.count; i++){
+        SPTTrack *trackFromArray = [songList objectAtIndex:i];
+        if([trackFromArray.identifier isEqualToString:track.identifier]){
+            [tableView se]
+        }
+    }*/
+}
+
+- (void) trackAddedNotification:(NSNotification *) notification
+{
+    [tableView reloadData];
 }
 
 #pragma mark - UITableViewDataSource methods
@@ -196,38 +202,24 @@
 }
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 10;
+    return [[SongManager sharedSongManager] getSongList].count;
 }
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell = [[UITableViewCell alloc] init];
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"asfd"];
     cell.backgroundColor = [UIColor clearColor];
     
-    /*UIView *cellView = [[UIView alloc] init];
-    cellView.frame = CGRectMake(0, 0, cell.bounds.size.width, cell.bounds.size.height);
-    cellView.backgroundColor = [UIColor clearColor];
-    [cell addSubview:cellView];
+    NSArray *songList = [[SongManager sharedSongManager] getSongList];
     
-    UITextView *titleTextView = [[UITextView alloc] init];
-    titleTextView.translatesAutoresizingMaskIntoConstraints = NO;
-    titleTextView.backgroundColor = [UIColor clearColor];
-    titleTextView.text = @"Generic Song Name";
-    titleTextView.textColor = [ColorsUtil titleTextColor];
-    titleTextView.font = [UIFont systemFontOfSize:18];
-    [cellView addSubview:titleTextView];
+    SPTTrack *thisTrack = [songList objectAtIndex:indexPath.row];
     
-    UITextView *artistTextView = [[UITextView alloc] init];
-    artistTextView.translatesAutoresizingMaskIntoConstraints = NO;
-    artistTextView.backgroundColor = [UIColor clearColor];
-    artistTextView.text = @"Generic Artist Name";
-    artistTextView.textColor = [ColorsUtil titleTextColor];
-    artistTextView.font = [UIFont systemFontOfSize:14];
-    [cellView addSubview:artistTextView];
+    cell.textLabel.text = thisTrack.name;
+    cell.textLabel.textColor = [ColorsUtil sideBackgroundColor];
+    cell.textLabel.font = [UIFont systemFontOfSize:18];
     
-    NSDictionary *bindings = NSDictionaryOfVariableBindings(titleTextView, artistTextView);
-    [cellView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[titleTextView]-10-|" options:0 metrics:nil views:bindings]];
-    [cellView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-15-[artistTextView]-10-|" options:0 metrics:nil views:bindings]];
-    [cellView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[titleTextView(>=35)]-10-[artistTextView(==25)]-0-|" options:0 metrics:nil views:bindings]];*/
+    cell.detailTextLabel.text = ((SPTArtist *)[thisTrack.artists objectAtIndex:0]).name;
+    cell.detailTextLabel.textColor = [ColorsUtil sideBackgroundColor];
+    cell.textLabel.font = [UIFont systemFontOfSize:14];
     
     return cell;
 }
@@ -235,7 +227,7 @@
 #pragma mark - UITableViewDelegate methods
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 100.0;
+    return 50.0;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
