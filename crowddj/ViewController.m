@@ -19,6 +19,9 @@
     UIButton *refreshButton;
     UITableView *tableView;
     UIView *bottomView;
+    
+    UITextField *textField;
+    UIButton *hashtagButton;
 }
 @end
 
@@ -51,6 +54,20 @@
     textFieldView.translatesAutoresizingMaskIntoConstraints = NO;
     textFieldView.backgroundColor = [ColorsUtil textFieldBackgroundColor];
     [centerView addSubview:textFieldView];
+    
+    textField = [[UITextField alloc] init];
+    textField.translatesAutoresizingMaskIntoConstraints = NO;
+    textField.backgroundColor = [UIColor clearColor];
+    textField.placeholder = @"Enter Hashtag Here";
+    textField.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+    [textFieldView addSubview:textField];
+    
+    hashtagButton = [[UIButton alloc] init];
+    hashtagButton.translatesAutoresizingMaskIntoConstraints = NO;
+    hashtagButton.backgroundColor = [ColorsUtil buttonColors];
+    [hashtagButton setTitle:@"Go" forState:UIControlStateNormal];
+    [hashtagButton setTitleColor:[ColorsUtil titleTextColor] forState:UIControlStateNormal];
+    [textFieldView addSubview:hashtagButton];
     
     tableView = [[UITableView alloc] init];
     tableView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -89,7 +106,7 @@
     [refreshButton addTarget:self action:@selector(refreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:refreshButton];*/
     
-    NSDictionary *bindings = NSDictionaryOfVariableBindings(bannerView, centerView, textFieldView, tableView, bottomView);
+    NSDictionary *bindings = NSDictionaryOfVariableBindings(bannerView, centerView, textFieldView, tableView, bottomView, textField, hashtagButton);
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[bannerView]-0-|" options:0 metrics:nil views:bindings]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[centerView]-10-|" options:0 metrics:nil views:bindings]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[bannerView(==10)]-0-[centerView(>=200)]-10-|" options:0 metrics:nil views:bindings]];
@@ -98,6 +115,10 @@
     [centerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[tableView]-10-|" options:0 metrics:nil views:bindings]];
     [centerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[bottomView]-10-|" options:0 metrics:nil views:bindings]];
     [centerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[textFieldView(==60)]-10-[tableView]-10-[bottomView(==60)]-10-|" options:0 metrics:nil views:bindings]];
+    
+    [textFieldView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[textField]-10-[hashtagButton(==40)]-10-|" options:0 metrics:nil views:bindings]];
+    [textFieldView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[textField]-10-|" options:0 metrics:nil views:bindings]];
+    [textFieldView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[hashtagButton]-10-|" options:0 metrics:nil views:bindings]];
     
     
     

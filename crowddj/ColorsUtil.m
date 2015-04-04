@@ -34,4 +34,8 @@
     return [UIColor colorWithRed:0.67843 green:0.67843 blue:0.67843 alpha:1.0];
 }
 
++ (UIColor *) buttonColors{
+    return [UIColor colorWithRed:0.55686 green:0.55686 blue:0.55686 alpha:1.0];
+}
+
 @end

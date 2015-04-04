@@ -17,6 +17,7 @@
 + (UIColor *) sideBackgroundColor;
 + (UIColor *) centerBackgroundColor;
 + (UIColor *) textFieldBackgroundColor;
++ (UIColor *) buttonColors;
 
 
 @end
