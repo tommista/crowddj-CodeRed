@@ -11,6 +11,7 @@
 #import "SongManager.h"
 
 @interface TwitterManager(){
+    NSMutableDictionary *tweetList;
 }
 @end
 
@@ -29,6 +30,7 @@ static NSString * const accessToken = @"AAAAAAAAAAAAAAAAAAAAALXqdgAAAAAAMfVikYHy
 }
 
 - (void) initialize{
+    tweetList = [[NSMutableDictionary alloc] init];
 }
 
 - (void) fetchTweetsWithHashtag: (NSString *) hashtag{
@@ -38,10 +40,25 @@ static NSString * const accessToken = @"AAAAAAAAAAAAAAAAAAAAALXqdgAAAAAAMfVikYHy
     
     NSDictionary *parameters = @{@"q": hashtag};
     
-    [manager GET:@"https://api.twitter.com/1.1/search/tweets.json" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager GET:@"https://api.twitter.com/1.1/search/tweets.json" parameters:parameters success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
         NSLog(@"JSON: %@", responseObject);
         
-        [[SongManager sharedSongManager] addTrackToPlaylist:@"https://open.spotify.com/track/5U8hKxSaDXB8cVeLFQjvwx"];
+        NSArray *tweetArray = [responseObject objectForKey:@"statuses"];
+        
+        for(NSDictionary *tweet in tweetArray){
+            
+            if([tweetList objectForKey:[tweet objectForKey:@"id_str"]] == nil){
+                [tweetList setObject:tweet forKey:[tweet objectForKey:@"id_str"]];
+                NSArray *entities = [((NSDictionary *)[tweet objectForKey:@"entities"]) objectForKey:@"urls"];
+                if(entities.count != 0){
+                    NSString *expandedUrl = [((NSDictionary *)[entities objectAtIndex:0]) objectForKey:@"expanded_url"];
+                    if(expandedUrl != nil){
+                        NSLog(@"expandedURL: %@", expandedUrl);
+                        [[SongManager sharedSongManager] addTrackToPlaylist:expandedUrl];
+                    }
+                }
+            }
+        }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
