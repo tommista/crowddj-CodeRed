@@ -10,4 +10,9 @@
 
 @interface SongManager : NSObject
 
++(SongManager *) sharedSongManager;
+- (void) initialize;
+- (void) addTrackToPlaylist:(NSString *) url;
+- (void) clearList;
+
 @end

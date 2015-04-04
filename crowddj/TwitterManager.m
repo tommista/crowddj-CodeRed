@@ -8,6 +8,7 @@
 
 #import "TwitterManager.h"
 #import "AFHTTPRequestOperationManager.h"
+#import "SongManager.h"
 
 @interface TwitterManager(){
 }
@@ -39,6 +40,9 @@ static NSString * const accessToken = @"AAAAAAAAAAAAAAAAAAAAALXqdgAAAAAAMfVikYHy
     
     [manager GET:@"https://api.twitter.com/1.1/search/tweets.json" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
+        
+        [[SongManager sharedSongManager] addTrackToPlaylist:@"https://open.spotify.com/track/5U8hKxSaDXB8cVeLFQjvwx"];
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
