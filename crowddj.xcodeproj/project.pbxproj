@@ -25,6 +25,7 @@
 		0B3626FD1ACF88F500C57C5B /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3626F21ACF88F500C57C5B /* AFURLRequestSerialization.m */; };
 		0B3626FE1ACF88F500C57C5B /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3626F41ACF88F500C57C5B /* AFURLResponseSerialization.m */; };
 		0B3626FF1ACF88F500C57C5B /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3626F61ACF88F500C57C5B /* AFURLSessionManager.m */; };
+		0B3627021ACF8FF200C57C5B /* SongManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3627011ACF8FF200C57C5B /* SongManager.m */; };
 		8C5F65B06B775FD9FF936310 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E75B26F5A696B5F3BDB276D1 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -76,6 +77,8 @@
 		0B3626F41ACF88F500C57C5B /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		0B3626F51ACF88F500C57C5B /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		0B3626F61ACF88F500C57C5B /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
+		0B3627001ACF8FF200C57C5B /* SongManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SongManager.h; sourceTree = "<group>"; };
+		0B3627011ACF8FF200C57C5B /* SongManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SongManager.m; sourceTree = "<group>"; };
 		E48E87C67DB56055CA4FE985 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		E75B26F5A696B5F3BDB276D1 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -137,6 +140,8 @@
 				0B3626DE1ACF636900C57C5B /* SpotifyPlayer.m */,
 				0B3626E01ACF7F6200C57C5B /* TwitterManager.h */,
 				0B3626E11ACF7F6200C57C5B /* TwitterManager.m */,
+				0B3627001ACF8FF200C57C5B /* SongManager.h */,
+				0B3627011ACF8FF200C57C5B /* SongManager.m */,
 			);
 			path = crowddj;
 			sourceTree = "<group>";
@@ -354,6 +359,7 @@
 				0B3626DF1ACF636900C57C5B /* SpotifyPlayer.m in Sources */,
 				0B3626F81ACF88F500C57C5B /* AFHTTPRequestOperationManager.m in Sources */,
 				0B3626FB1ACF88F500C57C5B /* AFSecurityPolicy.m in Sources */,
+				0B3627021ACF8FF200C57C5B /* SongManager.m in Sources */,
 				0B3626B71ACF5B1E00C57C5B /* AppDelegate.m in Sources */,
 				0B3626B41ACF5B1E00C57C5B /* main.m in Sources */,
 				0B3626F91ACF88F500C57C5B /* AFHTTPSessionManager.m in Sources */,

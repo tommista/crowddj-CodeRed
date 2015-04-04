@@ -9,6 +9,10 @@
 #import "TwitterManager.h"
 #import "AFHTTPRequestOperationManager.h"
 
+@interface TwitterManager(){
+}
+@end
+
 static NSString * const accessToken = @"AAAAAAAAAAAAAAAAAAAAALXqdgAAAAAAMfVikYHyimgiQKPW9bqJGndfngk%3Dad7RyM7WUMG5knJcMm7PKICeoOLOfvORmqBZUlvvTVV6J3FI81";
 
 @implementation TwitterManager
@@ -24,7 +28,6 @@ static NSString * const accessToken = @"AAAAAAAAAAAAAAAAAAAAALXqdgAAAAAAMfVikYHy
 }
 
 - (void) initialize{
-    
 }
 
 - (void) fetchTweetsWithHashtag: (NSString *) hashtag{
