@@ -15,6 +15,7 @@
 		0B3626DA1ACF5FA200C57C5B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B3626D91ACF5FA200C57C5B /* AVFoundation.framework */; };
 		0B3626DC1ACF620B00C57C5B /* Spotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B3626DB1ACF620B00C57C5B /* Spotify.framework */; };
 		0B3626DF1ACF636900C57C5B /* SpotifyPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B3626DE1ACF636900C57C5B /* SpotifyPlayer.m */; };
+		8C5F65B06B775FD9FF936310 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E75B26F5A696B5F3BDB276D1 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,6 +29,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		011C9BD953A7E0A1E88A270A /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		0B3626AE1ACF5B1E00C57C5B /* crowddj.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = crowddj.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B3626B21ACF5B1E00C57C5B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B3626B31ACF5B1E00C57C5B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -43,6 +45,8 @@
 		0B3626DB1ACF620B00C57C5B /* Spotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Spotify.framework; sourceTree = "<group>"; };
 		0B3626DD1ACF636900C57C5B /* SpotifyPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpotifyPlayer.h; sourceTree = "<group>"; };
 		0B3626DE1ACF636900C57C5B /* SpotifyPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpotifyPlayer.m; sourceTree = "<group>"; };
+		E48E87C67DB56055CA4FE985 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		E75B26F5A696B5F3BDB276D1 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +56,7 @@
 			files = (
 				0B3626DA1ACF5FA200C57C5B /* AVFoundation.framework in Frameworks */,
 				0B3626DC1ACF620B00C57C5B /* Spotify.framework in Frameworks */,
+				8C5F65B06B775FD9FF936310 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,6 +78,8 @@
 				0B3626B01ACF5B1E00C57C5B /* crowddj */,
 				0B3626CA1ACF5B1E00C57C5B /* crowddjTests */,
 				0B3626AF1ACF5B1E00C57C5B /* Products */,
+				26E3908E0EBB3F82E120A53C /* Pods */,
+				B0DBCE238D3550ECFBAB0301 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -126,6 +133,23 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		26E3908E0EBB3F82E120A53C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E48E87C67DB56055CA4FE985 /* Pods.debug.xcconfig */,
+				011C9BD953A7E0A1E88A270A /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		B0DBCE238D3550ECFBAB0301 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E75B26F5A696B5F3BDB276D1 /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -133,9 +157,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0B3626D11ACF5B1E00C57C5B /* Build configuration list for PBXNativeTarget "crowddj" */;
 			buildPhases = (
+				AEE16EABFCAC52242FF0A859 /* Check Pods Manifest.lock */,
 				0B3626AA1ACF5B1E00C57C5B /* Sources */,
 				0B3626AB1ACF5B1E00C57C5B /* Frameworks */,
 				0B3626AC1ACF5B1E00C57C5B /* Resources */,
+				72B2382375E3AA36E3FA992A /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -218,6 +244,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		72B2382375E3AA36E3FA992A /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AEE16EABFCAC52242FF0A859 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0B3626AA1ACF5B1E00C57C5B /* Sources */ = {
@@ -330,6 +389,7 @@
 		};
 		0B3626D21ACF5B1E00C57C5B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E48E87C67DB56055CA4FE985 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -345,6 +405,7 @@
 		};
 		0B3626D31ACF5B1E00C57C5B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 011C9BD953A7E0A1E88A270A /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -411,6 +472,7 @@
 				0B3626D31ACF5B1E00C57C5B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0B3626D41ACF5B1E00C57C5B /* Build configuration list for PBXNativeTarget "crowddjTests" */ = {
 			isa = XCConfigurationList;
@@ -419,6 +481,7 @@
 				0B3626D61ACF5B1E00C57C5B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
