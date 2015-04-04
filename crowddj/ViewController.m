@@ -23,8 +23,11 @@
     UITextField *textField;
     UIButton *hashtagButton;
     
+    UIView *bottomLabelView;
     UILabel *bottomSongLabel;
     UILabel *bottomArtistLabel;
+    UILabel *playPauseButton;
+    UILabel *nextTrackButton;
 }
 @end
 
@@ -84,13 +87,32 @@
     bottomView.backgroundColor = [ColorsUtil textFieldBackgroundColor];
     [centerView addSubview:bottomView];
     
+    bottomLabelView = [[UIView alloc] init];
+    bottomLabelView.translatesAutoresizingMaskIntoConstraints = NO;
+    bottomLabelView.backgroundColor = [UIColor clearColor];
+    [bottomView addSubview:bottomLabelView];
+    
+    playPauseButton = [[UILabel alloc] init];
+    playPauseButton.translatesAutoresizingMaskIntoConstraints = NO;
+    playPauseButton.backgroundColor = [UIColor clearColor];
+    playPauseButton.text = @"PP";
+    playPauseButton.textColor = [UIColor blackColor];
+    [bottomView addSubview:playPauseButton];
+    
+    nextTrackButton = [[UILabel alloc] init];
+    nextTrackButton.translatesAutoresizingMaskIntoConstraints = NO;
+    nextTrackButton.backgroundColor = [UIColor clearColor];
+    nextTrackButton.text = @"NT";
+    nextTrackButton.textColor = [UIColor blackColor];
+    [bottomView addSubview:nextTrackButton];
+    
     bottomSongLabel = [[UILabel alloc] init];
     bottomSongLabel.translatesAutoresizingMaskIntoConstraints = NO;
     bottomSongLabel.backgroundColor = [UIColor clearColor];
     bottomSongLabel.textColor = [ColorsUtil titleTextColor];
     bottomSongLabel.text = @"Song Label";
     bottomSongLabel.font = [UIFont systemFontOfSize:18];
-    [bottomView addSubview:bottomSongLabel];
+    [bottomLabelView addSubview:bottomSongLabel];
     
     bottomArtistLabel = [[UILabel alloc] init];
     bottomArtistLabel.translatesAutoresizingMaskIntoConstraints = NO;
@@ -98,7 +120,7 @@
     bottomArtistLabel.textColor = [ColorsUtil titleTextColor];
     bottomArtistLabel.text = @"Artist Label";
     bottomArtistLabel.font = [UIFont systemFontOfSize:14];
-    [bottomView addSubview:bottomArtistLabel];
+    [bottomLabelView addSubview:bottomArtistLabel];
     
     /*playButton = [[UIButton alloc] init];
     [playButton setTitle:@"Play" forState:UIControlStateNormal];
@@ -127,7 +149,8 @@
     [refreshButton addTarget:self action:@selector(refreshButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:refreshButton];*/
     
-    NSDictionary *bindings = NSDictionaryOfVariableBindings(bannerView, centerView, textFieldView, tableView, bottomView, textField, hashtagButton, bottomSongLabel, bottomArtistLabel);
+    NSDictionary *bindings = NSDictionaryOfVariableBindings(bannerView, centerView, textFieldView, tableView, bottomView, textField, hashtagButton, bottomSongLabel, bottomArtistLabel, bottomLabelView, playPauseButton,
+                                                            nextTrackButton);
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[bannerView]-0-|" options:0 metrics:nil views:bindings]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[centerView]-10-|" options:0 metrics:nil views:bindings]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[bannerView(==10)]-0-[centerView(>=200)]-10-|" options:0 metrics:nil views:bindings]];
@@ -141,9 +164,14 @@
     [textFieldView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[textField]-10-|" options:0 metrics:nil views:bindings]];
     [textFieldView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[hashtagButton]-10-|" options:0 metrics:nil views:bindings]];
     
-    [bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[bottomSongLabel]-10-|" options:0 metrics:nil views:bindings]];
-    [bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[bottomArtistLabel]-10-|" options:0 metrics:nil views:bindings]];
-    [bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-5-[bottomSongLabel(==25)]-5-[bottomArtistLabel(==20)]-5-|" options:0 metrics:nil views:bindings]];
+    [bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[bottomLabelView]-10-[playPauseButton(==25)]-10-[nextTrackButton(==25)]-10-|" options:0 metrics:nil views:bindings]];
+    [bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[bottomLabelView]-0-|" options:0 metrics:nil views:bindings]];
+    [bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[playPauseButton]-0-|" options:0 metrics:nil views:bindings]];
+    [bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[nextTrackButton]-0-|" options:0 metrics:nil views:bindings]];
+    
+    [bottomLabelView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[bottomSongLabel]-10-|" options:0 metrics:nil views:bindings]];
+    [bottomLabelView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[bottomArtistLabel]-10-|" options:0 metrics:nil views:bindings]];
+    [bottomLabelView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-5-[bottomSongLabel(==25)]-5-[bottomArtistLabel(==20)]-5-|" options:0 metrics:nil views:bindings]];
     
     //[self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[playButton]-10-|" options:0 metrics:nil views:bindings]];
     //[self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[pauseButton]-10-|" options:0 metrics:nil views:bindings]];
