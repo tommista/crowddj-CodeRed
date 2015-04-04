@@ -7,6 +7,7 @@
 //
 
 #import "SpotifyPlayer.h"
+#import "TwitterManager.h"
 
 @implementation SpotifyPlayer
 
@@ -31,6 +32,9 @@ static NSString * const kTokenSwapServiceURL = @"http://localhost:1234/swap";
 }
 
 - (void) play{
+    
+    [[TwitterManager sharedTwitterManager] fetchTweetsWithHashtag:@"#crowddj"];
+    
     if(!_player.isPlaying){
         [_player setIsPlaying:YES callback:^(NSError *error) {
         }];
@@ -77,7 +81,7 @@ static NSString * const kTokenSwapServiceURL = @"http://localhost:1234/swap";
             return;
         }
         
-        [self playTrack:@"spotify:track:1Bildp7NM39gR3smbMh8W1"];
+        //[self playTrack:@"spotify:track:1Bildp7NM39gR3smbMh8W1"];
         
         
     }];

@@ -12,6 +12,6 @@
 
 +(TwitterManager *) sharedTwitterManager;
 - (void) initialize;
-- (void) doSomething;
+- (void) fetchTweetsWithHashtag: (NSString *) hashtag;
 
 @end
