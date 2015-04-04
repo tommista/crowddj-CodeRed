@@ -1,5 +1,10 @@
+//
+//  SPTRequest.h
+//  Basic Auth
+//
+//  Created by Daniel Kennett on 14/11/2013.
 /*
- Copyright 2015 Spotify AB
+ Copyright 2013 Spotify AB
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -28,12 +33,8 @@ typedef NS_ENUM(NSUInteger, SPTSearchQueryType) {
 	/// Specifies that all search results will be of type `SPTArtist`.
 	SPTQueryTypeArtist,
 	/// Specifies that all search results will be of type `SPTAlbum`.
-	SPTQueryTypeAlbum,
-	/// Specifies that all search results will be of type `SPTPartialPlaylist`.
-	SPTQueryTypePlaylist,
+	SPTQueryTypeAlbum
 };
-
-FOUNDATION_EXPORT NSString * const SPTMarketFromToken;
 
 /** This class provides methods to get Spotify SDK metadata objects. */
 @interface SPTRequest : NSObject
@@ -52,17 +53,6 @@ FOUNDATION_EXPORT NSString * const SPTMarketFromToken;
  */
 +(void)requestItemAtURI:(NSURL *)uri withSession:(SPTSession *)session callback:(SPTRequestCallback)block;
 
-/** Request the item at the given Spotify URI.
-
- @note This method takes Spotify URIs in the form `spotify:*`, NOT HTTP URLs.
-
- @param uri The Spotify URI of the item to request.
- @param market Either a ISO 3166-1 country code to filter the results to, or "from_token" (`SPTMarketFromToken`) to pick the market from the session (requires the `user-read-private` scope), or `nil` for no market filtering.
- @param session An authenticated session. Can be `nil` depending on the URI.
- @param block The block to be called when the operation is complete. The block will pass a Spotify SDK metadata object on success, otherwise an error.
- */
-+(void)requestItemAtURI:(NSURL *)uri withSession:(SPTSession *)session market:(NSString *)market callback:(SPTRequestCallback)block;
-
 /** Convert an `SPTPartialObject` into a "full" metadata object.
 
  @param partialObject The object to promote to a "full" object.
@@ -70,16 +60,6 @@ FOUNDATION_EXPORT NSString * const SPTMarketFromToken;
  @param block The block to be called when the operation is complete. The block will pass a Spotify SDK metadata object on success, otherwise an error.
  */
 +(void)requestItemFromPartialObject:(id <SPTPartialObject>)partialObject withSession:(SPTSession *)session callback:(SPTRequestCallback)block;
-
-/** Convert an `SPTPartialObject` into a "full" metadata object.
-
- @param partialObject The object to promote to a "full" object.
- @param market Either a ISO 3166-1 country code to filter the results to, or "from_token" (`SPTMarketFromToken`) to pick the market from the session (requires the `user-read-private` scope), or `nil` for no market filtering.
- @param session An authenticated session. Can be `nil` depending on the URI.
- @param block The block to be called when the operation is complete. The block will pass a Spotify SDK metadata object on success, otherwise an error.
- */
-+(void)requestItemFromPartialObject:(id <SPTPartialObject>)partialObject withSession:(SPTSession *)session market:(NSString *)market callback:(SPTRequestCallback)block;
-
 
 ///----------------------------
 /// @name Playlists
@@ -93,21 +73,13 @@ FOUNDATION_EXPORT NSString * const SPTMarketFromToken;
  */
 +(void)playlistsForUserInSession:(SPTSession *)session callback:(SPTRequestCallback)block;
 
-/** Get the a user's playlist list.
-
- @param username The username of the user to get playlists for.
- @param session An authenticated session. Must be valid and authenticated with the `SPTAuthPlaylistReadScope` scope as necessary.
- @param block The block to be called when the operation is complete. The block will pass an `SPTPlaylistList` object on success, otherwise an error.
- */
-+(void)playlistsForUser:(NSString *)username withSession:(SPTSession *)session callback:(SPTRequestCallback)block;
-
 /** Get the authenticated user's starred playlist.
 
  @param session An authenticated session. Must be valid and authenticated with the
  `SPTAuthPlaylistReadScope` or `SPTAuthPlaylistReadPrivateScope` scope as necessary.
  @param block The block to be called when the operation is complete. The block will pass an `SPTPlaylistSnapshot` object on success, otherwise an error.
  */
-+(void)starredListForUserInSession:(SPTSession *)session callback:(SPTRequestCallback)block DEPRECATED_ATTRIBUTE ;
++(void)starredListForUserInSession:(SPTSession *)session callback:(SPTRequestCallback)block;
 
 ///----------------------------
 /// @name User Information
@@ -132,7 +104,7 @@ FOUNDATION_EXPORT NSString * const SPTMarketFromToken;
  @param searchQueryType The type of search to do.
  @param offset The index at which to start returning results.
  @param session An authenticated session. Can be `nil`.
- @param market Either a ISO 3166-1 country code to filter the results to, or "from_token" (`SPTMarketFromToken`) to pick the market from the session (requires the `user-read-private` scope), or `nil` for no market filtering.
+ @param market Either a ISO 3166-1 country code to filter the results to, or `from_token` to pick the market from the session (requires the `user-read-private` scope), or `nil` for no market filtering.
  @param block The block to be called when the operation is complete. The block will pass an `SPTListPage` containing results on success, otherwise an error.
  */
 +(void)performSearchWithQuery:(NSString *)searchQuery queryType:(SPTSearchQueryType)searchQueryType offset:(NSInteger)offset session:(SPTSession *)session market:(NSString *)market callback:(SPTRequestCallback)block;

@@ -1,5 +1,10 @@
+//
+//  SPTAudioStreamingController.h
+//  Spotify iOS SDK
+//
+//  Created by Daniel Kennett on 16/10/2013.
 /*
- Copyright 2015 Spotify AB
+ Copyright 2013 Spotify AB
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -17,8 +22,6 @@
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 #import "SPTTypes.h"
-#import "SPTDiskCache.h"
-#import "SPTPlayOptions.h"
 
 /** A volume value, in the range 0.0..1.0. */
 typedef double SPTVolume;
@@ -33,13 +36,13 @@ typedef NS_ENUM(NSUInteger, SPTBitrate) {
 	SPTBitrateHigh = 2,
 };
 
-FOUNDATION_EXPORT NSString * const SPTAudioStreamingMetadataTrackName DEPRECATED_ATTRIBUTE;
+FOUNDATION_EXPORT NSString * const SPTAudioStreamingMetadataTrackName;
 FOUNDATION_EXPORT NSString * const SPTAudioStreamingMetadataTrackURI;
-FOUNDATION_EXPORT NSString * const SPTAudioStreamingMetadataArtistName DEPRECATED_ATTRIBUTE;
-FOUNDATION_EXPORT NSString * const SPTAudioStreamingMetadataArtistURI DEPRECATED_ATTRIBUTE;
-FOUNDATION_EXPORT NSString * const SPTAudioStreamingMetadataAlbumName DEPRECATED_ATTRIBUTE;
-FOUNDATION_EXPORT NSString * const SPTAudioStreamingMetadataAlbumURI DEPRECATED_ATTRIBUTE;
-FOUNDATION_EXPORT NSString * const SPTAudioStreamingMetadataTrackDuration DEPRECATED_ATTRIBUTE;
+FOUNDATION_EXPORT NSString * const SPTAudioStreamingMetadataArtistName;
+FOUNDATION_EXPORT NSString * const SPTAudioStreamingMetadataArtistURI;
+FOUNDATION_EXPORT NSString * const SPTAudioStreamingMetadataAlbumName;
+FOUNDATION_EXPORT NSString * const SPTAudioStreamingMetadataAlbumURI;
+FOUNDATION_EXPORT NSString * const SPTAudioStreamingMetadataTrackDuration;
 
 @class SPTSession;
 @class SPTCoreAudioController;
@@ -106,13 +109,8 @@ FOUNDATION_EXPORT NSString * const SPTAudioStreamingMetadataTrackDuration DEPREC
 /** The receiver's playback delegate, which deals with audio playback events. */
 @property (nonatomic, weak) id <SPTAudioStreamingPlaybackDelegate> playbackDelegate;
 
-/**
- * @brief The object responsible for caching of audio data.
- * @discussion The object is an instance of a class that implements the <code>SPTDiskCaching</code> protocol.
- * If <code>nil</code>, no caching will be performed.
- * @see <code>SPTDiskCaching</code>
- */
-@property (nonatomic, strong) id <SPTDiskCaching> diskCache;
+/** The maximum number of bytes to store in the disk cache, this cache could be cleared at any time by the operating system */
+@property (nonatomic, readwrite) NSUInteger diskCacheSizeLimit;
 
 ///----------------------------
 /// @name Controlling Playback
@@ -161,37 +159,27 @@ FOUNDATION_EXPORT NSString * const SPTAudioStreamingMetadataTrackDuration DEPREC
  
  Supported URI types: Tracks, Albums and Playlists
 
- @see -playURIs:withOptions:callback
-
  @param uri The URI to play.
  @param block The callback block to be executed when the playback command has been
  received, which will pass back an `NSError` object if an error ocurred.
  */
--(void)playURI:(NSURL *)uri callback:(SPTErrorableOperationCallback)block DEPRECATED_ATTRIBUTE;
+-(void)playURI:(NSURL *)uri callback:(SPTErrorableOperationCallback)block;
 
 /** Play a Spotify URI.
  
  Supported URI types: Tracks, Albums and Playlists
-
- This function is deprecated and will be removed in the next version.
-
- @see -playURIs:withOptions:callback
-
+ 
  @param uri The URI to play.
  @param index The track to start playing from if an album or playlist
  @param block The callback block to be executed when the playback command has been
  received, which will pass back an `NSError` object if an error ocurred.
  */
--(void)playURI:(NSURL *)uri fromIndex:(int)index callback:(SPTErrorableOperationCallback)block DEPRECATED_ATTRIBUTE;
+-(void)playURI:(NSURL *)uri fromIndex:(int)index callback:(SPTErrorableOperationCallback)block;
 
 /** Play a list of Spotify URIs.
  
  Supported URI types: Tracks
-
- This function is deprecated and will be removed in the next version.
-
- @see -playURIs:withOptions:callback
-
+ 
  @param uris The list of URI's to play.
  @param index The track to start playing from if an album or playlist
  @param block The callback block to be executed when the playback command has been
@@ -199,119 +187,69 @@ FOUNDATION_EXPORT NSString * const SPTAudioStreamingMetadataTrackDuration DEPREC
  */
 -(void)playURIs:(NSArray *)uris fromIndex:(int)index callback:(SPTErrorableOperationCallback)block;
 
-/** Play a list of Spotify URIs.
-
- Supported URI types: Tracks
-
- @param uris The list of URI's to play (at most 100 tracks)
- @param options A `SPTPlayOptions` containing extra information about the play request such as which track to play and from which starting position within the track.
- @param block The callback block to be executed when the playback command has been
- received, which will pass back an `NSError` object if an error ocurred.
- */
--(void)playURIs:(NSArray *)uris withOptions:(SPTPlayOptions *)options callback:(SPTErrorableOperationCallback)block;
-
 /** Set the current list of tracks.
  
  Supported URI types: Tracks
-
- This function is deprecated and will be removed in the next version.
-
- @see -replaceURIs:withCurrentlyPlaying:callback
  
  @param uris The list of URI's to play.
  @param block The callback block to be executed when the tracks are set, or an `NSError` object if an error ocurred.
  */
--(void)setURIs:(NSArray *)uris callback:(SPTErrorableOperationCallback)block DEPRECATED_ATTRIBUTE;
-
-/** Replace the current list of tracks without stopping playback.
-
- Supported URI types: Tracks
-
- @param uris The list of URI's to play.
- @param index The current track in the list.
- @param block The callback block to be executed when the tracks are set, or an `NSError` object if an error ocurred.
- */
--(void)replaceURIs:(NSArray *)uris withCurrentTrack:(int)index callback:(SPTErrorableOperationCallback)block;
+-(void)setURIs:(NSArray *)uris callback:(SPTErrorableOperationCallback)block;
 
 /** Start playing the current list of tracks from a specific position.
-
- This function is deprecated and will be removed in the next version.
-
- @see -playURIs:withOptions:callback
-
+ 
  @param index The track to start playing from if an album or playlist
  @param block The callback block to be executed when the playback command has been
  received, which will pass back an `NSError` object if an error ocurred.
  */
--(void)playURIsFromIndex:(int)index callback:(SPTErrorableOperationCallback)block DEPRECATED_ATTRIBUTE;
+-(void)playURIsFromIndex:(int)index callback:(SPTErrorableOperationCallback)block;
 
 /** Play a track provider.
  
  Supported types: SPTTrack, SPTAlbum and SPTPlaylist
-
- This function is deprecated and will be removed in the next version.
-
- @see -playURIs:withOptions:callback
-
+ 
  @param provider A track provider.
  @param block The callback block to be executed when the playback command has been
  received, which will pass back an `NSError` object if an error ocurred.
  */
--(void)playTrackProvider:(id<SPTTrackProvider>)provider callback:(SPTErrorableOperationCallback)block DEPRECATED_ATTRIBUTE;
+-(void)playTrackProvider:(id<SPTTrackProvider>)provider callback:(SPTErrorableOperationCallback)block;
 
 /** Play a track provider.
  
  Supported types: SPTTrack, SPTAlbum and SPTPlaylist
-
- This function is deprecated and will be removed in the next version.
-
- @see -playURIs:withOptions:callback
-
+ 
  @param provider A track provider.
  @param index How many tracks to skip.
  @param block The callback block to be executed when the playback command has been
  received, which will pass back an `NSError` object if an error ocurred.
  */
--(void)playTrackProvider:(id<SPTTrackProvider>)provider fromIndex:(int)index callback:(SPTErrorableOperationCallback)block DEPRECATED_ATTRIBUTE;
+-(void)playTrackProvider:(id<SPTTrackProvider>)provider fromIndex:(int)index callback:(SPTErrorableOperationCallback)block;
 
 /** Queue a Spotify URI.
  
  Supported URI types: Tracks
-
- This function is deprecated and will be removed in the next version.
-
- @see -playURIs:withOptions:callback
 
  @param uri The URI to queue.
  @param block The callback block to be executed when the playback command has been
  received, which will pass back an `NSError` object if an error ocurred.
  */
--(void)queueURI:(NSURL *)uri callback:(SPTErrorableOperationCallback)block DEPRECATED_ATTRIBUTE;
+-(void)queueURI:(NSURL *)uri callback:(SPTErrorableOperationCallback)block;
 
 /** Queue a Spotify URI.
  
  Supported URI types: Tracks
-
- This function is deprecated and will be removed in the next version.
-
- @see -playURIs:withOptions:callback
 
  @param uri The URI to queue.
  @param clear Clear the queue before adding URI
  @param block The callback block to be executed when the playback command has been
  received, which will pass back an `NSError` object if an error ocurred.
  */
--(void)queueURI:(NSURL *)uri clearQueue:(BOOL)clear callback:(SPTErrorableOperationCallback)block DEPRECATED_ATTRIBUTE;
+-(void)queueURI:(NSURL *)uri clearQueue:(BOOL)clear callback:(SPTErrorableOperationCallback)block;
 
 /** Queue a list of Spotify URIs.
  
  Supported URI types: Tracks
-
- This function is deprecated and will be removed in the next version.
-
- @see -playURIs:withOptions:callback
- @see -replaceURIs:withCurrentTrack:callback
-
+ 
  @param uris The array of URIs to queue.
  @param clear Clear the queue before adding URIs
  @param block The callback block to be executed when the playback command has been
@@ -322,37 +260,26 @@ FOUNDATION_EXPORT NSString * const SPTAudioStreamingMetadataTrackDuration DEPREC
 /** Queue a track provider.
  
  Supported types: SPTTrack
-
- This function is deprecated and will be removed in the next version.
-
- @see -playURIs:withOptions:callback
-
+ 
  @param provider A track provider.
  @param clear Clear the queue before adding
  @param block The callback block to be executed when the playback command has been
  received, which will pass back an `NSError` object if an error ocurred.
  */
--(void)queueTrackProvider:(id<SPTTrackProvider>)provider clearQueue:(BOOL)clear callback:(SPTErrorableOperationCallback)block DEPRECATED_ATTRIBUTE;
+-(void)queueTrackProvider:(id<SPTTrackProvider>)provider clearQueue:(BOOL)clear callback:(SPTErrorableOperationCallback)block;
 
 /** Start playing back queued items
-
- @see -playURIs:withOptions:callback
-
- This function is deprecated and will be removed in the next version.
 
  @param block The callback block to be executed when the playback has been
  started, which will pass back an `NSError` object if an error ocurred.
  */
--(void)queuePlay:(SPTErrorableOperationCallback)block DEPRECATED_ATTRIBUTE;
+-(void)queuePlay:(SPTErrorableOperationCallback)block;
 
 /** Remove all queued items
-
- This function is deprecated and will be removed in the next version.
- @see -replaceURIs:withCurrentTrack:callback
  
  @param block The callback block to be executed when the queue is empty or an `NSError` object if an error ocurred.
  */
--(void)queueClear:(SPTErrorableOperationCallback)block DEPRECATED_ATTRIBUTE;
+-(void)queueClear:(SPTErrorableOperationCallback)block;
 
 /** Stop playback and clear the queue and list of tracks.
  
@@ -391,7 +318,7 @@ FOUNDATION_EXPORT NSString * const SPTAudioStreamingMetadataTrackDuration DEPREC
  @param index The relative index of the track in the current track list.
  @param block A block which receives an `NSDictionary` object containing the metadata.
  */
--(void)getRelativeTrackMetadata:(int)index callback:(void (^)(NSDictionary *))block DEPRECATED_ATTRIBUTE;
+-(void)getRelativeTrackMetadata:(int)index callback:(void (^)(NSDictionary *))block;
 
 /** Returns basic metadata about a specific track in the current track list, or `nil` if it doesn't exist or is unknown.
  
@@ -407,7 +334,7 @@ FOUNDATION_EXPORT NSString * const SPTAudioStreamingMetadataTrackDuration DEPREC
  @param index The absolute index of the track in the current track list.
  @param block A block which receives an `NSDictionary` object containing the metadata.
  */
--(void)getAbsoluteTrackMetadata:(int)index callback:(void (^)(NSDictionary *))block DEPRECATED_ATTRIBUTE;
+-(void)getAbsoluteTrackMetadata:(int)index callback:(void (^)(NSDictionary *))block;
 
 ///----------------------------
 /// @name Playback State
@@ -425,7 +352,7 @@ FOUNDATION_EXPORT NSString * const SPTAudioStreamingMetadataTrackDuration DEPREC
  - `SPTAudioStreamingMetadataAlbumURI`: The track's album's URI.
  - `SPTAudioStreamingMetadataTrackDuration`: The track's duration as an `NSTimeInterval` boxed in an `NSNumber`.
  */
-@property (nonatomic, readonly, copy) NSDictionary *currentTrackMetadata DEPRECATED_ATTRIBUTE;
+@property (nonatomic, readonly, copy) NSDictionary *currentTrackMetadata;
 
 /** Returns `YES` if the receiver is playing audio, otherwise `NO`. */
 @property (nonatomic, readonly) BOOL isPlaying;
@@ -442,25 +369,15 @@ FOUNDATION_EXPORT NSString * const SPTAudioStreamingMetadataTrackDuration DEPREC
 /** Returns the current approximate playback position of the current track. */
 @property (nonatomic, readonly) NSTimeInterval currentPlaybackPosition;
 
-/** Returns the length of the current track. */
-@property (nonatomic, readonly) NSTimeInterval currentTrackDuration;
-
-/** Returns the current track URI, playing or not. */
-@property (nonatomic, readonly) NSURL *currentTrackURI;
-
-/** Returns the currenly playing track index */
-@property (nonatomic, readonly) int currentTrackIndex;
-
 /** Returns the current streaming bitrate the receiver is using. */
 @property (nonatomic, readonly) SPTBitrate targetBitrate;
 
-/** Current position in track list, @see currentTrackIndex */
-@property (nonatomic, readwrite) int trackListPosition DEPRECATED_ATTRIBUTE;
+@property (nonatomic, readwrite) int trackListPosition;
 
 @property (nonatomic, readonly) int trackListSize;
 
 /** Number of queued items */
-@property (nonatomic, readonly) int queueSize DEPRECATED_ATTRIBUTE;
+@property (nonatomic, readonly) int queueSize;
 
 @end
 
