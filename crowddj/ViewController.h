@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SpotifyPlayer.h"
 
 @interface ViewController : UIViewController
 
+@property (nonatomic, strong) SpotifyPlayer* spotifyPlayer;
 
 @end
 

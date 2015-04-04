@@ -43,6 +43,10 @@ static NSString * const kTokenSwapServiceURL = @"http://localhost:1234/swap";
     }
 }
 
+- (BOOL) isPlaying{
+    return _player.isPlaying;
+}
+
 - (void) playTrack:(NSString *)track{
     [SPTRequest requestItemAtURI:[NSURL URLWithString:track]
                      withSession:nil
@@ -72,7 +76,7 @@ static NSString * const kTokenSwapServiceURL = @"http://localhost:1234/swap";
             return;
         }
         
-        //[self playTrack:@"spotify:track:1Bildp7NM39gR3smbMh8W1"];
+        [self playTrack:@"spotify:track:1Bildp7NM39gR3smbMh8W1"];
         
         
     }];

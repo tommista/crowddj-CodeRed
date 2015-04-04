@@ -20,14 +20,20 @@ static NSString * const kTokenSwapServiceURL = @"http://localhost:1234/swap";
 - (BOOL)application:(UIApplication *)application
 didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    // Create SPTAuth instance; create login URL and open it
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    _mainViewController = [[ViewController alloc] init];
+    
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:_mainViewController];
+    
+    self.window.rootViewController = nav;
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+
     SPTAuth *auth = [SPTAuth defaultInstance];
     NSURL *loginURL = [auth loginURLForClientId:kClientId
                             declaredRedirectURL:[NSURL URLWithString:kCallbackURL]
                                          scopes:@[SPTAuthStreamingScope]];
     
-    // Opening a URL in Safari close to application launch may trigger
-    // an iOS bug, so we wait a bit before doing so.
     [application performSelector:@selector(openURL:)
                       withObject:loginURL afterDelay:0.1];
     
